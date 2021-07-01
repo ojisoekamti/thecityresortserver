@@ -11,7 +11,7 @@ jobs:
       with:
         host: ${{ secrets.IP }}
         username: ${{ secrets.USER }}
-        password: ${{ secrets.PRIVATE_KEY }}
+        key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         script: |
           cd /home/webamdin/web/sb.thecityresort.com/public_html
