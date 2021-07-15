@@ -636,16 +636,16 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Services
+# facilities
 --------------------------------------------------------------*/
-.services .icon-box {
+.facilities .icon-box {
   text-align: center;
   padding: 80px 20px;
   transition: all ease-in-out 0.3s;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-.services .icon-box .icon {
+.facilities .icon-box .icon {
   margin: 0 auto;
   width: 64px;
   height: 64px;
@@ -658,12 +658,12 @@ section {
   transform-style: preserve-3d;
 }
 
-.services .icon-box .icon i {
+.facilities .icon-box .icon i {
   color: #fff;
   font-size: 28px;
 }
 
-.services .icon-box .icon::before {
+.facilities .icon-box .icon::before {
   position: absolute;
   content: '';
   left: -8px;
@@ -675,41 +675,41 @@ section {
   transform: translateZ(-1px);
 }
 
-.services .icon-box h4 {
+.facilities .icon-box h4 {
   font-weight: 700;
   margin-bottom: 15px;
   font-size: 24px;
 }
 
-.services .icon-box h4 a {
+.facilities .icon-box h4 a {
   color: #191919;
 }
 
-.services .icon-box p {
+.facilities .icon-box p {
   line-height: 24px;
   font-size: 14px;
   margin-bottom: 0;
 }
 
-.services .icon-box:hover {
+.facilities .icon-box:hover {
   background: #e88c2d;
   border-color: #e88c2d;
   padding: 70px 20px 90px 20px;
 }
 
-.services .icon-box:hover .icon {
+.facilities .icon-box:hover .icon {
   background: #fff;
 }
 
-.services .icon-box:hover .icon i {
+.facilities .icon-box:hover .icon i {
   color: #e88c2d;
 }
 
-.services .icon-box:hover .icon::before {
+.facilities .icon-box:hover .icon::before {
   background: #e89d2d;
 }
 
-.services .icon-box:hover h4 a, .services .icon-box:hover p {
+.facilities .icon-box:hover h4 a, .facilities .icon-box:hover p {
   color: #fff;
 }
 

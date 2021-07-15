@@ -58,7 +58,7 @@
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services">Services</a></li>
+          <li><a class="nav-link scrollto" href="#facilities">Services</a></li>
           <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
           <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li>
           <li><a class="nav-link scrollto" href="#team">Team</a></li>
@@ -90,8 +90,8 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="container position-relative" data-aos="fade-up" data-aos-delay="500">
-      <h1>Welcome to Day</h1>
-      <h2>We are team of talented designers making websites with Bootstrap</h2>
+      <h1>Welcome to City Resort Residence</h1>
+      <h2></h2>
       <a href="#about" class="btn-get-started scrollto">Get Started</a>
     </div>
   </section><!-- End Hero -->
@@ -107,7 +107,7 @@
             <img src="assets/img/about.jpg" class="img-fluid" alt="">
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content" data-aos="fade-right">
-            <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
+            <h3>The City Resort Apartment</h3>
             <p class="fst-italic">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
               magna aliqua.
@@ -199,13 +199,13 @@
     </section><!-- End Clients Section -->
 
     <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
+    <section id="facilities" class="facilities">
       <div class="container">
 
         <div class="section-title">
-          <span>Services</span>
-          <h2>Services</h2>
-          <p>Sit sint consectetur velit quisquam cupiditate impedit suscipit alias</p>
+          <span>Facilities</span>
+          <h2>Facilities</h2>
+          <p></p>
         </div>
 
         <div class="row">
@@ -260,7 +260,7 @@
         </div>
 
       </div>
-    </section><!-- End Services Section -->
+    </section><!-- End facilities Section -->
 
     <!-- ======= Cta Section ======= -->
     <section id="cta" class="cta">
@@ -392,7 +392,7 @@
 
       </div>
     </section><!-- End Portfolio Section -->
-    
+
     <!-- ======= Team Section ======= -->
     <section id="team" class="team">
       <div class="container">
@@ -565,20 +565,9 @@
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">facilities</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-2 col-md-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
             </ul>
           </div>
 
