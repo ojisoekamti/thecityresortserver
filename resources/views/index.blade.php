@@ -58,27 +58,10 @@
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#facilities">Services</a></li>
-          <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
-          <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li>
-          <li><a class="nav-link scrollto" href="#team">Team</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-            </ul>
-          </li>
+          <li><a class="nav-link scrollto" href="#facilities">Facilities</a></li>
+          <li><a class="nav-link scrollto " href="#gallery">Gallery</a></li>
+          <li><a class="nav-link scrollto" href="#team">Pengelola</a></li>
+          <li><a class="nav-link scrollto" href="#unit-listing">Unit Listngs</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -163,41 +146,6 @@
       </div>
     </section><!-- End Why Us Section -->
 
-    <!-- ======= Clients Section ======= -->
-    <section id="clients" class="clients">
-      <div class="container" data-aos="zoom-in">
-
-        <div class="row d-flex align-items-center">
-
-          <div class="col-lg-2 col-md-4 col-6">
-            <img src="assets/img/clients/client-1.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6">
-            <img src="assets/img/clients/client-2.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6">
-            <img src="assets/img/clients/client-3.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6">
-            <img src="assets/img/clients/client-4.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6">
-            <img src="assets/img/clients/client-5.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6">
-            <img src="assets/img/clients/client-6.png" class="img-fluid" alt="">
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Clients Section -->
-
     <!-- ======= Services Section ======= -->
     <section id="facilities" class="facilities">
       <div class="container">
@@ -275,13 +223,13 @@
       </div>
     </section><!-- End Cta Section -->
 
-    <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio">
+    <!-- ======= Gallery Section ======= -->
+    <section id="gallery" class="portfolio">
       <div class="container">
 
         <div class="section-title">
-          <span>Portfolio</span>
-          <h2>Portfolio</h2>
+          <span>Gallery</span>
+          <h2>Gallery</h2>
           <p>Sit sint consectetur velit quisquam cupiditate impedit suscipit alias</p>
         </div>
 
@@ -460,6 +408,20 @@
       </div>
     </section><!-- End Team Section -->
 
+    
+    <!-- ======= Team Section ======= -->
+    <section id="unit-listing" class="team">
+      <div class="container">
+
+        <div class="section-title">
+          <span>Unit Listings</span>
+          <h2>Unit Listings</h2>
+          <p>Sit sint consectetur velit quisquam cupiditate impedit suscipit alias</p>
+        </div>
+
+      </div>
+    </section><!-- End Team Section -->
+
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
       <div class="container">
@@ -475,7 +437,7 @@
             <div class="info-box mb-4">
               <i class="bx bx-map"></i>
               <h3>Our Address</h3>
-              <p>A108 Adam Street, New York, NY 535022</p>
+              <p>The City Resort Residence, Kecamatan Cengkareng, DKI Jakarta 11730</p>
             </div>
           </div>
 
@@ -483,7 +445,7 @@
             <div class="info-box  mb-4">
               <i class="bx bx-envelope"></i>
               <h3>Email Us</h3>
-              <p>contact@example.com</p>
+              <p>info@thecityresort.com</p>
             </div>
           </div>
 
@@ -491,7 +453,7 @@
             <div class="info-box  mb-4">
               <i class="bx bx-phone-call"></i>
               <h3>Call Us</h3>
-              <p>+1 5589 55488 55</p>
+              <p>(+6221) 5435 0000</p>
             </div>
           </div>
 
@@ -500,7 +462,7 @@
         <div class="row" data-aos="fade-up">
 
           <div class="col-lg-6 ">
-            <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
+            <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.9619401490336!2d106.72951161744383!3d-6.13581619999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6a1d56f22577ef%3A0x544c9eb21bfe294c!2sApartemen%20City%20Resort!5e0!3m2!1sid!2sid!4v1626324572157!5m2!1sid!2sid" frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
           </div>
 
           <div class="col-lg-6">
@@ -537,52 +499,6 @@
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-lg-4 col-md-6">
-            <div class="footer-info">
-              <h3>Day</h3>
-              <p>
-                A108 Adam Street <br>
-                NY 535022, USA<br><br>
-                <strong>Phone:</strong> +1 5589 55488 55<br>
-                <strong>Email:</strong> info@example.com<br>
-              </p>
-              <div class="social-links mt-3">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-2 col-md-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">facilities</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-4 col-md-6 footer-newsletter">
-            <h4>Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-
-          </div>
-
-        </div>
-      </div>
-    </div>
 
     <div class="container">
       <div class="copyright">

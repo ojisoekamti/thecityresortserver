@@ -8,6 +8,9 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+.nav-link:focus, .nav-link:hover {
+  color: #fff;
+}
 body {
   font-family: "Open Sans", sans-serif;
   color: #444444;
