@@ -21,7 +21,7 @@
                         <h3 class="text-white text-center">New Complaintment</h3>
                     </div>
                     <div class="card-body">
-                        <table class="table-danger table data-table">
+                        <table class="table-danger table tickets-all">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -38,7 +38,7 @@
             </div>
             <div class="col-6">
                 <div class="p-3">
-                    <table class="table-warning table">
+                    <table class="table-warning table tickets-proccess">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -48,19 +48,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="col-6">
                 <div class="p-3">
-                    <table class="table-success table">
+                    <table class="table-success table tickets-success">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -70,12 +64,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -107,7 +95,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    var table = $('.data-table').DataTable({
+    var table = $('.tickets-all').DataTable({
         "paging": false,
         "ordering": false,
         "info": false,
@@ -139,8 +127,75 @@
             }
         ]
     });
+
+    var table2 = $('.tickets-proccess').DataTable({
+        "paging": false,
+        "ordering": false,
+        "info": false,
+        "filter": false,
+        "ajax": {
+            "url": "{{ route('api.tickets-proccess') }}",
+            "type": "GET",
+            "dataSrc": "",
+            "complete": function(xhr, responseText) {
+                console.log(xhr);
+                console.log(responseText); //*** responseJSON: Array[0]
+            }
+        },
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'title',
+                name: 'title'
+            },
+            {
+                data: 'created_at',
+                name: 'created_at'
+            },
+            {
+                data: 'created_by',
+                name: 'created_by'
+            }
+        ]
+    });
+    var table3 = $('.tickets-success').DataTable({
+        "paging": false,
+        "ordering": false,
+        "info": false,
+        "filter": false,
+        "ajax": {
+            "url": "{{ route('api.tickets-success') }}",
+            "type": "GET",
+            "dataSrc": "",
+            "complete": function(xhr, responseText) {
+                console.log(xhr);
+                console.log(responseText); //*** responseJSON: Array[0]
+            }
+        },
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'title',
+                name: 'title'
+            },
+            {
+                data: 'created_at',
+                name: 'created_at'
+            },
+            {
+                data: 'created_by',
+                name: 'created_by'
+            }
+        ]
+    });
     setInterval(function() {
         table.ajax.reload();
+        table2.ajax.reload();
+        table3.ajax.reload();
     }, 30000);
 </script>
 

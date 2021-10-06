@@ -18,7 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('tickets', function() {
-    // If the Content-Type and Accept headers are set to 'application/json', 
-    // this will return a JSON structure. This will be cleaned up later.
-    return Ticket::all();
+    return Ticket::where('department', 3)->where('status',1)->get();
 })->name('api.tickets');
+Route::get('tickets-proccess', function() {
+    return Ticket::where('department', 3)->where('status',2)->get();
+})->name('api.tickets-proccess');
+Route::get('tickets-success', function() {
+    return Ticket::where('department', 3)->where('status',3)->get();
+})->name('api.tickets-success');
