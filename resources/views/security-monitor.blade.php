@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Complaint Monitoring</title>
 </head>
 
 <body class="bg-dark text-white">
@@ -18,7 +18,7 @@
             <div class="col-12">
                 <div class="p-3 card bg-dark">
                     <div class="card-title">
-                        <h3 class="text-white text-center">New Complaintment</h3>
+                        <h3 class="text-white text-center">Complaint Monitoring</h3>
                     </div>
                     <div class="card-body">
                         <table class="table-danger table tickets-all">
