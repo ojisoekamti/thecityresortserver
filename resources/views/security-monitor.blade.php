@@ -37,38 +37,40 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="p-3">
-                    <table class="table-warning table tickets-proccess">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Date Time</th>
-                                <th scope="col">Pelapor</th>
-                                <th scope="col">Unit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+            <div class="row">
+                <div class="col-6">
+                    <div class="p-3">
+                        <table class="table-warning table tickets-proccess">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Date Time</th>
+                                    <th scope="col">Pelapor</th>
+                                    <th scope="col">Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="col-6">
-                <div class="p-3">
-                    <table class="table-success table tickets-success">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Date Time</th>
-                                <th scope="col">Pelapor</th>
-                                <th scope="col">Unit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                <div class="col-6">
+                    <div class="p-3">
+                        <table class="table-success table tickets-success">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Date Time</th>
+                                    <th scope="col">Pelapor</th>
+                                    <th scope="col">Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
