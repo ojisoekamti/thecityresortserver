@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Ticket;
+use App\Unit;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,7 +27,10 @@ Route::get('tickets', function() {
         $getDate = date("d",strtotime($value->created_at));
         $getYear = date("Y",strtotime($value->created_at));
         $ticket[$key]->tranNumber = "SCR-".$getMonth.$getDate.$getYear.$value->id;
+        $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
+        $ticket[$key]->unit_name = (count($unitData))?$unitData->unit_name:"";
     }
+
     //dd($ticket);
     return $ticket;
 })->name('api.tickets');
@@ -37,6 +42,8 @@ Route::get('tickets-proccess', function() {
         $getDate = date("d",strtotime($value->created_at));
         $getYear = date("Y",strtotime($value->created_at));
         $ticket[$key]->tranNumber = "SCR-".$getMonth.$getDate.$getYear.$value->id;
+        $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
+        $ticket[$key]->unit_name = (count($unitData))?$unitData->unit_name:"";
     }
     //dd($ticket);
     return $ticket;
@@ -49,6 +56,8 @@ Route::get('tickets-success', function() {
         $getDate = date("d",strtotime($value->created_at));
         $getYear = date("Y",strtotime($value->created_at));
         $ticket[$key]->tranNumber = "SCR-".$getMonth.$getDate.$getYear.$value->id;
+        $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
+        $ticket[$key]->unit_name = (count($unitData))?$unitData->unit_name:"";
     }
     //dd($ticket);
     return $ticket;

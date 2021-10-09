@@ -28,6 +28,7 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Date Time</th>
                                     <th scope="col">Pelapor</th>
+                                    <th scope="col">Unit</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,6 +46,7 @@
                                 <th scope="col">Title</th>
                                 <th scope="col">Date Time</th>
                                 <th scope="col">Pelapor</th>
+                                <th scope="col">Unit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,6 +63,7 @@
                                 <th scope="col">Title</th>
                                 <th scope="col">Date Time</th>
                                 <th scope="col">Pelapor</th>
+                                <th scope="col">Unit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -124,6 +127,10 @@
             {
                 data: 'created_by',
                 name: 'created_by'
+            },
+            {
+                data: 'unit_name',
+                name: 'unit_name'
             }
         ]
     });
@@ -157,6 +164,10 @@
             {
                 data: 'created_by',
                 name: 'created_by'
+            },
+            {
+                data: 'unit_name',
+                name: 'unit_name'
             }
         ]
     });
@@ -189,6 +200,10 @@
             {
                 data: 'created_by',
                 name: 'created_by'
+            },
+            {
+                data: 'unit_name',
+                name: 'unit_name'
             }
         ]
     });
