@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Ticket;
@@ -62,3 +63,5 @@ Route::get('tickets-success', function() {
     //dd($ticket);
     return $ticket;
 })->name('api.tickets-success');
+Route::post("user-login",[UserApiController::class, 'userLogin']);
+Route::get("user/{email}", "UserApiController@userDetail");
