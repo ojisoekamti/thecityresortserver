@@ -24,7 +24,7 @@
                         <table class="table-danger table tickets-all">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
+                                    <th scope="col">No</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Date Time</th>
                                     <th scope="col">Pelapor</th>
@@ -42,7 +42,7 @@
                     <table class="table-warning table tickets-proccess">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">No</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Date Time</th>
                                 <th scope="col">Pelapor</th>
@@ -59,7 +59,7 @@
                     <table class="table-success table tickets-success">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">No</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Date Time</th>
                                 <th scope="col">Pelapor</th>
