@@ -110,8 +110,8 @@
             }
         },
         columns: [{
-                data: 'id',
-                name: 'id'
+                data: 'tranNumber',
+                name: 'tranNumber'
             },
             {
                 data: 'title',
@@ -143,8 +143,8 @@
             }
         },
         columns: [{
-                data: 'id',
-                name: 'id'
+                data: 'tranNumber',
+                name: 'tranNumber'
             },
             {
                 data: 'title',
@@ -175,8 +175,8 @@
             }
         },
         columns: [{
-                data: 'id',
-                name: 'id'
+                data: 'tranNumber',
+                name: 'tranNumber'
             },
             {
                 data: 'title',

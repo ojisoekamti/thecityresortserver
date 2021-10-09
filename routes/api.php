@@ -18,11 +18,38 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('tickets', function() {
-    return Ticket::where('department', 3)->where('status',1)->get();
+    $ticket=Ticket::where('department', 3)->where('status',1)->get();
+    foreach ($ticket as $key => $value) {
+        # code...
+        $getMonth = date("m",strtotime($value->created_at));
+        $getDate = date("d",strtotime($value->created_at));
+        $getYear = date("Y",strtotime($value->created_at));
+        $ticket[$key]->tranNumber = "SCR-".$getMonth.$getDate.$getYear.$value->id;
+    }
+    //dd($ticket);
+    return $ticket;
 })->name('api.tickets');
 Route::get('tickets-proccess', function() {
-    return Ticket::where('department', 3)->where('status',2)->get();
+    $ticket=Ticket::where('department', 3)->where('status',2)->get();
+    foreach ($ticket as $key => $value) {
+        # code...
+        $getMonth = date("m",strtotime($value->created_at));
+        $getDate = date("d",strtotime($value->created_at));
+        $getYear = date("Y",strtotime($value->created_at));
+        $ticket[$key]->tranNumber = "SCR-".$getMonth.$getDate.$getYear.$value->id;
+    }
+    //dd($ticket);
+    return $ticket;
 })->name('api.tickets-proccess');
 Route::get('tickets-success', function() {
-    return Ticket::where('department', 3)->where('status',3)->get();
+    $ticket=Ticket::where('department', 3)->where('status',3)->get();
+    foreach ($ticket as $key => $value) {
+        # code...
+        $getMonth = date("m",strtotime($value->created_at));
+        $getDate = date("d",strtotime($value->created_at));
+        $getYear = date("Y",strtotime($value->created_at));
+        $ticket[$key]->tranNumber = "SCR-".$getMonth.$getDate.$getYear.$value->id;
+    }
+    //dd($ticket);
+    return $ticket;
 })->name('api.tickets-success');
