@@ -28,7 +28,7 @@ Route::get('tickets', function() {
         $getYear = date("Y",strtotime($value->created_at));
         $ticket[$key]->tranNumber = "SCR-".$getMonth.$getDate.$getYear.$value->id;
         $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
-        $ticket[$key]->unit_name = (count($unitData))?$unitData->unit_name:"";
+        $ticket[$key]->unit_name = (count($unitData)>0)?$unitData[0]->unit_number:"";
     }
 
     //dd($ticket);
@@ -43,7 +43,7 @@ Route::get('tickets-proccess', function() {
         $getYear = date("Y",strtotime($value->created_at));
         $ticket[$key]->tranNumber = "SCR-".$getMonth.$getDate.$getYear.$value->id;
         $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
-        $ticket[$key]->unit_name = (count($unitData))?$unitData->unit_name:"";
+        $ticket[$key]->unit_name = (count($unitData)>0)?$unitData[0]->unit_number:"";
     }
     //dd($ticket);
     return $ticket;
@@ -57,7 +57,7 @@ Route::get('tickets-success', function() {
         $getYear = date("Y",strtotime($value->created_at));
         $ticket[$key]->tranNumber = "SCR-".$getMonth.$getDate.$getYear.$value->id;
         $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
-        $ticket[$key]->unit_name = (count($unitData))?$unitData->unit_name:"";
+        $ticket[$key]->unit_name = (count($unitData)>0)?$unitData[0]->unit_number:"";
     }
     //dd($ticket);
     return $ticket;
