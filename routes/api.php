@@ -64,4 +64,5 @@ Route::get('tickets-success', function() {
     return $ticket;
 })->name('api.tickets-success');
 Route::post("user-login",[UserApiController::class, 'userLogin']);
+Route::post("user-otp",[UserApiController::class, 'userOtp']);
 Route::get("user/{email}", "UserApiController@userDetail");
