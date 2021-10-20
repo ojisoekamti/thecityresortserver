@@ -42,11 +42,16 @@ class UserApiController extends Controller
 
     public function userOtp(Request $request)
     {
+        if (!$request) {
+            return;
+        }
+        $phoneNumber = $request->phone_number;
+        $otp = $request->otp;
 
         $curl = curl_init();
-//https://api.k1nguniverse.com/api/v1/send?api_key=veoWXwRgiYOcsXa&api_pass=6rL8A2k0&module=SMS&sub_module=LONGNUMBER&sid=K1NGLONGOTP&destination=628111211457&content=Your%20OTP%20is%20234565
+        //https://api.k1nguniverse.com/api/v1/send?api_key=veoWXwRgiYOcsXa&api_pass=6rL8A2k0&module=SMS&sub_module=LONGNUMBER&sid=K1NGLONGOTP&destination=628111211457&content=Your%20OTP%20is%20234565
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.k1nguniverse.com/api/v1/send?api_key=veoWXwRgiYOcsXa&api_pass=6rL8A2k0&module=SMS&sub_module=LONGNUMBER&sid=K1NGLONGOTP&destination=628111211457&content=Your%20OTP%20is%20234565',
+            CURLOPT_URL => 'https://api.k1nguniverse.com/api/v1/send?api_key=veoWXwRgiYOcsXa&api_pass=6rL8A2k0&module=SMS&sub_module=LONGNUMBER&sid=K1NGLONGOTP&destination=' . $phoneNumber . '&content=Your%20OTP%20is% ' . $otp,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -61,7 +66,7 @@ class UserApiController extends Controller
         curl_close($curl);
         //echo $response;
 
-        return response()->json($response);
+        return json_decode($response);
     }
 
     protected function guard()
