@@ -66,7 +66,7 @@ class UserApiController extends Controller
         curl_close($curl);
         //echo $response;
 
-        return;
+        return $response;
     }
 
     protected function guard()
