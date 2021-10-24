@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\SwitchPermission;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -72,5 +73,19 @@ class UserApiController extends Controller
     protected function guard()
     {
         return Auth::guard(app('VoyagerGuard'));
+    }
+
+    
+    public function userShift(Request $request)
+    {
+        $uid = $request->uid;
+        $tukarShift = array();
+        if ($uid != "") {
+            $tukarShift = SwitchPermission::where("pemohon",$uid)->first();
+            $tukarShift->pemohon = "Abdul Ghoji Hanggoro";
+            $tukarShift->delegate = "Dansek 1";
+            return json_decode($tukarShift);
+        }
+        return [];
     }
 }
