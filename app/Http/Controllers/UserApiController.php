@@ -84,7 +84,7 @@ class UserApiController extends Controller
             $tukarShift = SwitchPermission::where("pemohon",$uid)->first();
             $tukarShift->pemohon = "Abdul Ghoji Hanggoro";
             $tukarShift->delegate = "Dansek 1";
-            return json_decode($tukarShift);
+            return $tukarShift;
         }
         return [];
     }
