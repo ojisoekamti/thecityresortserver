@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use TCG\Voyager\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserApiController extends Controller
 {
@@ -75,16 +76,28 @@ class UserApiController extends Controller
         return Auth::guard(app('VoyagerGuard'));
     }
 
-    
+
     public function userShift(Request $request)
     {
         $uid = $request->uid;
         $tukarShift = array();
         if ($uid != "") {
-            $tukarShift = SwitchPermission::where("pemohon",$uid)->first();
+            $tukarShift = SwitchPermission::where("pemohon", $uid)->first();
             $tukarShift->pemohon = "Abdul Ghoji Hanggoro";
             $tukarShift->delegate = "Dansek 1";
             return response()->json(json_decode($tukarShift));
+        }
+        return [];
+    }
+
+
+    public function userRole(Request $request)
+    {
+        $uid = $request->uid;
+        $user_role = array();
+        if ($uid != "") {
+            $user_role = DB::select("SELECT t1.id AS id, t1.name AS lev1, COUNT(t2.name) as lev2, COUNT(t3.name) as lev3, COUNT(t4.name) as lev4 FROM cityresort_stag.users AS t1 LEFT JOIN cityresort_stag.users AS t2 ON t2.supervisor = t1.id LEFT JOIN cityresort_stag.users AS t3 ON t3.supervisor = t2.id LEFT JOIN cityresort_stag.users AS t4 ON t4.supervisor = t3.id WHERE (t1.id = 6 AND t1.role_id = 5) GROUP BY t1.name,t1.id");
+            return response()->json(json_decode($user_role));
         }
         return [];
     }
