@@ -136,7 +136,7 @@ class UserApiController extends Controller
     {
         $uid = $request->uid;
         if ($uid != "") {
-            $role = Role::where('user_id', $uid)->get();
+            $role =  DB::table('user_roles')->where('user_id', $uid)->get();
             return response()->json($role);
         }
         return [];
