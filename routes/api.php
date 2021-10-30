@@ -67,4 +67,6 @@ Route::post("user-login", [UserApiController::class, 'userLogin']);
 Route::post("user-otp", [UserApiController::class, 'userOtp']);
 Route::get("user-shift", [UserApiController::class, 'userShift']);
 Route::get("user-role", [UserApiController::class, 'userRole']);
+Route::get("user-delegate", [UserApiController::class, 'userTicketDelegate']);
+Route::get("user-role-additional", [UserApiController::class, 'userGroupSec']);
 Route::get("user/{email}", "UserApiController@userDetail");

@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\SwitchPermission;
+use App\Ticket;
+use App\Unit;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use TCG\Voyager\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use TCG\Voyager\Models\Role;
 
 class UserApiController extends Controller
 {
@@ -99,9 +102,42 @@ class UserApiController extends Controller
     {
         $uid = $request->uid;
         $user_role = array();
+        $role = $request->role;
         if ($uid != "") {
-            $user_role = DB::select("SELECT t1.id AS id, t1.name AS lev1, COUNT(t2.name) as lev2, COUNT(t3.name) as lev3, COUNT(t4.name) as lev4 FROM cityresort_stag.users AS t1 LEFT JOIN cityresort_stag.users AS t2 ON t2.supervisor = t1.id LEFT JOIN cityresort_stag.users AS t3 ON t3.supervisor = t2.id LEFT JOIN cityresort_stag.users AS t4 ON t4.supervisor = t3.id WHERE (t1.id = " . $uid . " AND t1.role_id = 5) GROUP BY t1.name,t1.id");
+            $user_role = DB::select("SELECT t1.id AS id, t1.name AS lev1, COUNT(t2.name) as lev2, COUNT(t3.name) as lev3, COUNT(t4.name) as lev4 FROM cityresort_stag.users AS t1 LEFT JOIN cityresort_stag.users AS t2 ON t2.supervisor = t1.id LEFT JOIN cityresort_stag.users AS t3 ON t3.supervisor = t2.id LEFT JOIN cityresort_stag.users AS t4 ON t4.supervisor = t3.id WHERE (t1.id = " . $uid . " AND t1.role_id = " . $role . ") GROUP BY t1.name,t1.id");
             return response()->json($user_role);
+        }
+        return [];
+    }
+
+    public function userTicketDelegate(Request $request)
+    {
+        $uid = $request->uid;
+        $ticket = array();
+        $role = $request->role;
+        if ($uid != "") {
+            $ticket = Ticket::where('pic', $uid)->where('status', 2)->get();
+            foreach ($ticket as $key => $value) {
+                # code...
+                $getMonth = date("m", strtotime($value->created_at));
+                $getDate = date("d", strtotime($value->created_at));
+                $getYear = date("Y", strtotime($value->created_at));
+                $ticket[$key]->tranNumber = "SCR-" . $getMonth . $getDate . $getYear . $value->id;
+                $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
+                $ticket[$key]->unit_name = (count($unitData) > 0) ? $unitData[0]->unit_number : "";
+            }
+            return response()->json($ticket);
+        }
+        return [];
+    }
+
+
+    public function userGroupSec(Request $request)
+    {
+        $uid = $request->uid;
+        if ($uid != "") {
+            $role = Role::where('user_id', $uid)->get();
+            return response()->json($role);
         }
         return [];
     }
