@@ -47,12 +47,16 @@ class UserApiController extends Controller
 
     public function tukarShift(Request $request)
     {
-        // dump($request);
-        // dd($request);
-        $delegate = DB::table('users')->where('name', 'Like', '%' . $request->delegate . '%')->first();
+        $curTime = new \DateTime($request->date);
+        dump($request->user_id);
+        $delegate = (string)$request->delegate;
+        $delegate = DB::select("SELECT * from users where users.name LIKE '%Abdul Ghoji%'");
+        if (count($delegate) > 0) {
+            $delegate = $delegate[0]->id;
+        }
         DB::table('switch_permissions')->insert([
             'pemohon' => $request->user_id,
-            'date' => $request->date,
+            'date' => $curTime->format("Y-m-d H:i:s"),
             'from' => $request->time,
             'to' => $request->timeTo,
             'delegate' => $delegate,
