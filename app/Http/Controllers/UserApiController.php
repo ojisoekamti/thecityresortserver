@@ -47,11 +47,11 @@ class UserApiController extends Controller
 
     public function tukarShift(Request $request)
     {
-        dump($request);
+        // dump($request);
         if (!$request) {
             return;
         }
-
+        return $request;
     }
 
     public function userOtp(Request $request)
