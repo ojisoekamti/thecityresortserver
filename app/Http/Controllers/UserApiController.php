@@ -51,7 +51,7 @@ class UserApiController extends Controller
         if (!$request) {
             return;
         }
-        dump($request);
+        dd($request);
         $delegate = DB::table('users')->where('name', 'Like', '%' . $request->delegate . '%')->first();
         DB::table('switch_permissions')->insert([
             'pemohon' => $request->user_id,
