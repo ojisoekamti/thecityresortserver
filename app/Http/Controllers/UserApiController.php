@@ -106,9 +106,12 @@ class UserApiController extends Controller
         $tukarShift = array();
         if ($uid != "") {
             $tukarShift = SwitchPermission::where("pemohon", $uid)->first();
+            
             if ($tukarShift) {
-                $tukarShift->pemohon = "Abdul Ghoji Hanggoro";
-                $tukarShift->delegate = "Dansek 1";
+                
+                // $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
+                $tukarShift->pemohon = User::select('name')->where('id', $tukarShift->pemohon)->get();
+                $tukarShift->delegate = User::select('name')->where('id', $tukarShift->delegate)->get();
             } else {
                 return [];
             }
