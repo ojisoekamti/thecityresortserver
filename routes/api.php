@@ -66,6 +66,7 @@ Route::get('tickets-success', function () {
 Route::post("user-login", [UserApiController::class, 'userLogin']);
 Route::post("user-otp", [UserApiController::class, 'userOtp']);
 Route::post("tukar-shift", [UserApiController::class, 'tukarShift']);
+Route::post("update-user", [UserApiController::class, 'updateUser']);
 Route::get("user-shift", [UserApiController::class, 'userShift']);
 Route::get("user-role", [UserApiController::class, 'userRole']);
 Route::get("user-delegate", [UserApiController::class, 'userTicketDelegate']);

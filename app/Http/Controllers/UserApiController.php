@@ -135,6 +135,18 @@ class UserApiController extends Controller
         return [];
     }
 
+    public function updateUser(Request $request)
+    {
+        $uid = $request->uid;
+        $user_role = array();
+        $role = $request->role;
+        if ($uid != "") {
+            DB::table('users')
+                ->where('id', $uid)
+                ->update(['name' => $request->name]);
+        }
+        return [];
+    }
     public function userTicketDelegate(Request $request)
     {
         $uid = $request->uid;
