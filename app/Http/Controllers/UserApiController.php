@@ -51,20 +51,15 @@ class UserApiController extends Controller
         if (!$request) {
             return;
         }
-        try {
-            //code...
-            $delegate = DB::table('users')->where('name', 'Like', '%' . $request->delegate . '%')->first();
-            DB::table('switch_permissions')->insert([
-                'pemohon' => $request->user_id,
-                'date' => $request->date,
-                'from' => $request->time,
-                'to' => $request->timeTo,
-                'delegate' => $delegate,
-            ]);
-        } catch (\Throwable $th) {
-            //throw $th;
-            return $th;
-        }
+
+        $delegate = DB::table('users')->where('name', 'Like', '%' . $request->delegate . '%')->first();
+        DB::table('switch_permissions')->insert([
+            'pemohon' => $request->user_id,
+            'date' => $request->date,
+            'from' => $request->time,
+            'to' => $request->timeTo,
+            'delegate' => $delegate,
+        ]);
 
         return $request;
     }
