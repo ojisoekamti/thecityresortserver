@@ -48,7 +48,7 @@ class UserApiController extends Controller
     public function tukarShift(Request $request)
     {
         $curTime = new \DateTime($request->date);
-        dump($request->user_id);
+        // dump($request->user_id);
         $delegate = (string)$request->delegate;
         $delegate = DB::select("SELECT * from users where users.name LIKE '%Abdul Ghoji%'");
         if (count($delegate) > 0) {
@@ -62,7 +62,7 @@ class UserApiController extends Controller
             'delegate' => $delegate,
         ]);
 
-        return $request;
+        return response()->json(json_decode($request));
     }
 
     public function userOtp(Request $request)
