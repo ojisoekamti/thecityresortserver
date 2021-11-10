@@ -50,7 +50,7 @@ class UserApiController extends Controller
         $curTime = new \DateTime($request->date);
         // dump($request->user_id);
         $delegate = (string)$request->delegate;
-        $delegate = DB::select("SELECT * from users where users.name LIKE '%Abdul Ghoji%'");
+        $delegate = DB::select("SELECT * from users where users.name LIKE '%$delegate%'");
         if (count($delegate) > 0) {
             $delegate = $delegate[0]->id;
         }
@@ -138,8 +138,6 @@ class UserApiController extends Controller
     public function updateUser(Request $request)
     {
         $uid = $request->uid;
-        $user_role = array();
-        $role = $request->role;
         if ($uid != "") {
             DB::table('users')
                 ->where('id', $uid)
