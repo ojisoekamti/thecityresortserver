@@ -45,6 +45,15 @@ class UserApiController extends Controller
         }
     }
 
+    public function tukarShift(Request $request)
+    {
+        dump($request);
+        if (!$request) {
+            return;
+        }
+
+    }
+
     public function userOtp(Request $request)
     {
         if (!$request) {
