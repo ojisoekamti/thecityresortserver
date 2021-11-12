@@ -59,7 +59,7 @@ class UserApiController extends Controller
             'pemohon' => $request->user_id,
             'date' => $curTime->format("Y-m-d H:i:s"),
             'date_to' => $curTimeTo->format("Y-m-d H:i:s"),
-            'description' => json_encode($request->description),
+            'description' => json_decode($request->description),
             'from' => $request->time,
             'to' => $request->timeTo,
             'delegate' => $delegate,
