@@ -48,6 +48,7 @@ class UserApiController extends Controller
     public function tukarShift(Request $request)
     {
         $curTime = new \DateTime($request->date);
+        $curTimeTo = new \DateTime($request->dateTo);
         // dump($request->user_id);
         $delegate = (string)$request->delegate;
         $delegate = DB::select("SELECT * from users where users.name LIKE '%$delegate%'");
@@ -57,6 +58,8 @@ class UserApiController extends Controller
         DB::table('switch_permissions')->insert([
             'pemohon' => $request->user_id,
             'date' => $curTime->format("Y-m-d H:i:s"),
+            'date_to' => $curTimeTo->format("Y-m-d H:i:s"),
+            'description' => $request->description,
             'from' => $request->time,
             'to' => $request->timeTo,
             'delegate' => $delegate,
