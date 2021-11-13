@@ -12,6 +12,7 @@ use TCG\Voyager\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use TCG\Voyager\Models\Role;
+use App\Models\File;
 
 class UserApiController extends Controller
 {
@@ -148,6 +149,7 @@ class UserApiController extends Controller
         }
         return [];
     }
+
     public function userTicketDelegate(Request $request)
     {
         $uid = $request->uid;
@@ -178,5 +180,71 @@ class UserApiController extends Controller
             return response()->json($role);
         }
         return [];
+    }
+
+    public function approveShiftInfo(Request $request)
+    {
+        $uid = $request->uid;
+        $approve = $request->approve;
+        // dump($uid);
+        if ($uid != "") {
+            $tukarShift = SwitchPermission::where("delegate", $uid)->whereNull("action")->whereNull("approved_by")->first();
+            if ($tukarShift->id == null) {
+                $tukarShift = SwitchPermission::where("approved_by", $uid)->whereNull("action")->first();
+            }
+            if ($tukarShift) {
+                // $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
+                $pemohon = User::select('name')->where('id', $tukarShift->pemohon)->get();
+                $tukarShift->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
+                $delegate = User::select('name')->where('id', $tukarShift->delegate)->get();
+                $tukarShift->delegate = (count($delegate) > 0) ? $delegate[0]->name : "";
+            } else {
+                return [];
+            }
+            if ($approve && $tukarShift->id != null) {
+                DB::table('switch_permissions')
+                    ->where('id', $tukarShift->id)
+                    ->update(['name' => $request->name]);
+            }
+            // print_r($tukarShift->id);
+            return response()->json($tukarShift);
+        }
+        if ($approve) {
+            DB::table('users')
+                ->where('id', $uid)
+                ->update(['name' => $request->name]);
+        }
+        return [];
+    }
+
+    public function upload(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|mimes:doc,docx,pdf,txt,csv,jpg|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+
+
+        if ($file = $request->file('file')) {
+            $path = $file->store('public/files');
+            $name = $file->getClientOriginalName();
+
+            //store your file into directory and db
+            // $save = new File File();
+            // $save->name = $file;
+            // $save->store_path = $path;
+            // $save->save();
+
+            return response()->json([
+                "success" => true,
+                "message" => "File successfully uploaded",
+                "file" => $file
+            ]);
+        }
     }
 }
