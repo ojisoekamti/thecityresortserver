@@ -252,13 +252,13 @@ class UserApiController extends Controller
             $user_role = DB::select("SELECT t1.id AS id, t1.name AS lev1, COUNT(t2.name) as lev2, COUNT(t3.name) as lev3, COUNT(t4.name) as lev4 FROM cityresort_stag.users AS t1 LEFT JOIN cityresort_stag.users AS t2 ON t2.supervisor = t1.id LEFT JOIN cityresort_stag.users AS t3 ON t3.supervisor = t2.id LEFT JOIN cityresort_stag.users AS t4 ON t4.supervisor = t3.id WHERE (t1.id = " . $uid . " AND t1.role_id = " . $role . ") GROUP BY t1.name,t1.id");
             if ($user_role[0]->lev2 > 0 && $user_role[0]->lev3 > 0) {
                 // dump("dansek");
-                $get_user = DB::select("SELECT * FROM role_group WHERE lev2 > 0 AND lev3 > 0 AND role_id = " . $role);
+                $get_user = DB::select("SELECT * FROM role_group WHERE lev2 > 0 AND lev3 > 0 AND role_id = " . $role . "AND t1.id != " . $uid);
             } elseif ($user_role[0]->lev2 > 0) {
                 // dump('danru');
-                $get_user = DB::select("SELECT * FROM role_group WHERE lev2 > 0 AND lev3 = 0 AND role_id = " . $role);
+                $get_user = DB::select("SELECT * FROM role_group WHERE lev2 > 0 AND lev3 = 0 AND role_id = " . $role . "AND t1.id != " . $uid);
             } else {
                 // dump('anggota');
-                $get_user = DB::select("SELECT * FROM role_group WHERE lev2 = 0 AND lev3 = 0 AND role_id = " . $role);
+                $get_user = DB::select("SELECT * FROM role_group WHERE lev2 = 0 AND lev3 = 0 AND role_id = " . $role . "AND t1.id != " . $uid);
             }
             // dump($get_user);
             return response()->json($get_user);
