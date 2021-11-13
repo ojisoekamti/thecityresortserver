@@ -70,7 +70,7 @@ Route::post("update-user", [UserApiController::class, 'updateUser']);
 Route::post("approve-shift-info", [UserApiController::class, 'approveShiftInfo']);
 Route::post("upload", [UserApiController::class, 'upload']);
 Route::get("get-user-delegate", [UserApiController::class, 'getUserDelegate']);
-// Route::post("approve-shift", [UserApiController::class, 'approveShiftInfo']);
+Route::post("approve-shift", [UserApiController::class, 'approveShiftInfo']);
 Route::get("user-shift", [UserApiController::class, 'userShift']);
 Route::get("user-role", [UserApiController::class, 'userRole']);
 Route::get("user-delegate", [UserApiController::class, 'userTicketDelegate']);

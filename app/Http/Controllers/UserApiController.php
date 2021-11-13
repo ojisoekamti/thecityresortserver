@@ -187,11 +187,13 @@ class UserApiController extends Controller
         // dump($uid);
         if ($uid != "") {
             $tukarShift = SwitchPermission::where("delegate", $uid)->whereNull("action")->whereNull("approved_by")->first();
-            if ($tukarShift->id == null) {
+            // dd($tukarShift);
+            $columnUpdate = 'approved_by';
+            if ($tukarShift == null) {
                 $tukarShift = SwitchPermission::where("approved_by", $uid)->whereNull("action")->first();
+                $columnUpdate = 'action';
             }
             if ($tukarShift) {
-                // $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
                 $pemohon = User::select('name')->where('id', $tukarShift->pemohon)->get();
                 $tukarShift->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
                 $delegate = User::select('name')->where('id', $tukarShift->delegate)->get();
@@ -199,20 +201,28 @@ class UserApiController extends Controller
             } else {
                 return [];
             }
-            if ($approve && $tukarShift->id != null) {
-                DB::table('switch_permissions')
-                    ->where('id', $tukarShift->id)
-                    ->update(['name' => $request->name]);
+            if ($approve != null && $tukarShift->id != null) {
+                $updateShift = DB::table('switch_permissions')
+                    ->where('id', $tukarShift->id);
+                if ($columnUpdate == 'approved_by') {
+                    $updateShift->update(['approved_by' => $uid]);
+                } else {
+                    $updateShift->update(['action' => 'Success']);
+                }
             }
             // print_r($tukarShift->id);
             return response()->json($tukarShift);
         }
-        if ($approve) {
-            DB::table('users')
-                ->where('id', $uid)
-                ->update(['name' => $request->name]);
-        }
         return [];
+    }
+
+    public function approveShift(Request $request)
+    {
+        $id = $request->id;
+        DB::table('switch_permissions')
+            ->where('id', $id)
+            ->update(['name' => $request->name]);
+        return response()->json(["Success" => true]);
     }
 
     public function upload(Request $request)
