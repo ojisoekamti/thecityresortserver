@@ -232,7 +232,7 @@ class UserApiController extends Controller
 
         if ($file = $request->file('file')) {
             $path = $file->store('public/files');
-            $name = $file->getClientOriginalName();
+            $name = $file->hashName();
 
             //store your file into directory and db
             // $save = new File File();
