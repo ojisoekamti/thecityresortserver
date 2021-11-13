@@ -50,7 +50,6 @@ class UserApiController extends Controller
     {
         $curTime = new \DateTime($request->date);
         $curTimeTo = new \DateTime($request->dateTo);
-        // dump($request->user_id);
         $delegate = (string)$request->delegate;
         $delegate = DB::select("SELECT * from users where users.name LIKE '%$delegate%'");
         if (count($delegate) > 0) {
@@ -78,7 +77,6 @@ class UserApiController extends Controller
         $otp = $request->otp;
 
         $curl = curl_init();
-        //https://api.k1nguniverse.com/api/v1/send?api_key=veoWXwRgiYOcsXa&api_pass=6rL8A2k0&module=SMS&sub_module=LONGNUMBER&sid=K1NGLONGOTP&destination=628111211457&content=Your%20OTP%20is%20234565
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://api.k1nguniverse.com/api/v1/send?api_key=veoWXwRgiYOcsXa&api_pass=6rL8A2k0&module=SMS&sub_module=LONGNUMBER&sid=K1NGLONGOTP&destination=' . $phoneNumber . '&content=Your%20OTP%20is%20' . $otp,
             CURLOPT_RETURNTRANSFER => true,
@@ -234,17 +232,37 @@ class UserApiController extends Controller
             $path = $file->store('public/files');
             $name = $file->hashName();
 
-            //store your file into directory and db
-            // $save = new File File();
-            // $save->name = $file;
-            // $save->store_path = $path;
-            // $save->save();
-
             return response()->json([
                 "success" => true,
                 "message" => "File successfully uploaded",
                 "file" => $name
             ]);
         }
+    }
+
+
+    public function getUserDelegate(Request $request)
+    {
+        $uid = $request->uid;
+        $user_role = array();
+        $get_user = array();
+        $role = $request->role;
+        // dump($uid);
+        if ($uid != "") {
+            $user_role = DB::select("SELECT t1.id AS id, t1.name AS lev1, COUNT(t2.name) as lev2, COUNT(t3.name) as lev3, COUNT(t4.name) as lev4 FROM cityresort_stag.users AS t1 LEFT JOIN cityresort_stag.users AS t2 ON t2.supervisor = t1.id LEFT JOIN cityresort_stag.users AS t3 ON t3.supervisor = t2.id LEFT JOIN cityresort_stag.users AS t4 ON t4.supervisor = t3.id WHERE (t1.id = " . $uid . " AND t1.role_id = " . $role . ") GROUP BY t1.name,t1.id");
+            if ($user_role[0]->lev2 > 0 && $user_role[0]->lev3 > 0) {
+                // dump("dansek");
+                $get_user = DB::select("SELECT * FROM role_group WHERE lev2 > 0 AND lev3 > 0 AND role_id = " . $role);
+            } elseif ($user_role[0]->lev2 > 0) {
+                // dump('danru');
+                $get_user = DB::select("SELECT * FROM role_group WHERE lev2 > 0 AND lev3 = 0 AND role_id = " . $role);
+            } else {
+                // dump('anggota');
+                $get_user = DB::select("SELECT * FROM role_group WHERE lev2 = 0 AND lev3 = 0 AND role_id = " . $role);
+            }
+            // dump($get_user);
+            return response()->json($get_user);
+        }
+        return [];
     }
 }
