@@ -201,7 +201,7 @@ class UserApiController extends Controller
             } else {
                 return [];
             }
-            if ($approve != null && $tukarShift->id != null) {
+            if ($approve != null && $tukarShift != null) {
                 $updateShift = DB::table('switch_permissions')
                     ->where('id', $tukarShift->id);
                 if ($columnUpdate == 'approved_by') {
