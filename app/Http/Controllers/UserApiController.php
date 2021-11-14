@@ -315,8 +315,8 @@ class UserApiController extends Controller
                 ->where('id', $id)
                 ->update($dataUpdate[0]);
 
-            return response()->json($dataUpdate);
+            return response()->json($dataUpdate[0]);
         }
-        return response()->json($dataUpdate);
+        return response()->json($dataUpdate[0]);
     }
 }
