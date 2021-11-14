@@ -51,6 +51,8 @@ class UserApiController extends Controller
         $curTime = new \DateTime($request->date);
         $curTimeTo = new \DateTime($request->dateTo);
         $delegate = (string)$request->delegate;
+        $status = $request->status;
+        $approval_flow = $request->approval_flow;
         $delegate = DB::select("SELECT * from users where users.name LIKE '%$delegate%'");
         if (count($delegate) > 0) {
             $delegate = $delegate[0]->id;
@@ -63,6 +65,8 @@ class UserApiController extends Controller
             'from' => $request->time,
             'to' => $request->timeTo,
             'delegate' => $delegate,
+            'status' => $status,
+            'approval_flow'=>$approval_flow
         ]);
 
         return response()->json(json_decode($request));
