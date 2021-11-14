@@ -295,12 +295,20 @@ class UserApiController extends Controller
     {
         $id = $request->id;
         $realisasi = $request->realisasi;
-        $penyelesaian = $request->penyelesaian=="" ? $request->penyelesaian : null;
+        $penyelesaian = $request->penyelesaian != "" ? $request->penyelesaian : null;
         $status = null;
         if ($penyelesaian != null) {
             $status = 'Done';
         }
         // dump($uid);
+        $dataUpdate = [];
+        array_push($dataUpdate, ['realization' => $realisasi]);
+        if ($penyelesaian != null) {
+            array_push($dataUpdate, ['result' => $penyelesaian]);
+        }
+        if ($status != null) {
+            array_push($dataUpdate, ['status' => $status]);
+        }
         if ($id != "") {
             // dump($get_user);
             DB::table('users')
