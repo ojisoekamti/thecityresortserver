@@ -280,9 +280,7 @@ class UserApiController extends Controller
     public function getTickets(Request $request)
     {
         $uid = $request->uid;
-        // dump($uid);
         if ($uid != "") {
-            // dump($get_user);
             $ticket = Ticket::where('pic', $uid)->whereNull('status')->get();
 
             return response()->json($ticket);

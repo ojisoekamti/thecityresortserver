@@ -50,7 +50,7 @@ Route::get('tickets-proccess', function () {
     return $ticket;
 })->name('api.tickets-proccess');
 Route::get('tickets-success', function () {
-    $ticket = Ticket::where('department', 3)->where('status', 3)->get();
+    $ticket = Ticket::where('department', 3)->where('status', "Done")->get();
     foreach ($ticket as $key => $value) {
         # code...
         $getMonth = date("m", strtotime($value->created_at));
