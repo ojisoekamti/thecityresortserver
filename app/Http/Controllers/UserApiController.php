@@ -303,15 +303,15 @@ class UserApiController extends Controller
         // dump($uid);
         // $dataUpdate = array();
         // array_push($dataUpdate, ['realization' => $realisasi]);
-        $dataUpdate = (object)array("realization"=>$realisasi);
+        $dataUpdate = (object)array("realization" => $realisasi);
         if ($penyelesaian != null) {
             // $dataUpdate[0]->result = $penyelesaian;
-            $dataUpdate = (object)array("result"=>$penyelesaian);
+            $dataUpdate = (object)array("result" => $penyelesaian);
 
             // array_push($dataUpdate, ['result' => $penyelesaian]);
         }
         if ($status != null) {
-            $dataUpdate = (object)array("status"=>$status);
+            $dataUpdate = (object)array("status" => $status);
 
             // $dataUpdate[0]->status = $status;
 
@@ -321,10 +321,10 @@ class UserApiController extends Controller
             // dump($get_user);
             DB::table('tickets')
                 ->where('id', $id)
-                ->update($dataUpdate[0]);
+                ->update($dataUpdate[]);
 
-            return response()->json($dataUpdate[0]);
+            return response()->json($dataUpdate[]);
         }
-        return response()->json($dataUpdate[0]);
+        return response()->json($dataUpdate[]);
     }
 }
