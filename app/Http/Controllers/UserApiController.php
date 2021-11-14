@@ -300,31 +300,21 @@ class UserApiController extends Controller
         if ($penyelesaian != null) {
             $status = 'Done';
         }
-        // dump($uid);
-        // $dataUpdate = array();
-        // array_push($dataUpdate, ['realization' => $realisasi]);
-        $dataUpdate = (object)array("realization" => $realisasi);
+        $dataUpdate['realization'] = $realisasi;
         if ($penyelesaian != null) {
-            // $dataUpdate[0]->result = $penyelesaian;
-            $dataUpdate = (object)array("result" => $penyelesaian);
-
-            // array_push($dataUpdate, ['result' => $penyelesaian]);
+            $dataUpdate['result'] = $penyelesaian;
         }
         if ($status != null) {
-            $dataUpdate = (object)array("status" => $status);
-
-            // $dataUpdate[0]->status = $status;
-
-            // array_push($dataUpdate, ['status' => $status]);
+            $dataUpdate['status'] = $status;
         }
         if ($id != "") {
             // dump($get_user);
             DB::table('tickets')
                 ->where('id', $id)
-                ->update($dataUpdate[]);
+                ->update($dataUpdate);
 
-            return response()->json($dataUpdate[]);
+            return response()->json($dataUpdate);
         }
-        return response()->json($dataUpdate[]);
+        return response()->json($dataUpdate);
     }
 }
