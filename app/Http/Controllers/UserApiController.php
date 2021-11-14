@@ -311,7 +311,7 @@ class UserApiController extends Controller
         }
         if ($id != "") {
             // dump($get_user);
-            DB::table('users')
+            DB::table('tickets')
                 ->where('id', $id)
                 ->update($dataUpdate);
 
