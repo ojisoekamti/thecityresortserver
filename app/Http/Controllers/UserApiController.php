@@ -303,7 +303,7 @@ class UserApiController extends Controller
         // dump($uid);
         // $dataUpdate = array();
         // array_push($dataUpdate, ['realization' => $realisasi]);
-        $dataUpdate = NULL;
+        $dataUpdate = new \stdClass();
         $dataUpdate[0]->realization = $realisasi;
         if ($penyelesaian != null) {
             $dataUpdate[0]->result = $penyelesaian;
