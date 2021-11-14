@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('tickets', function () {
-    $ticket = Ticket::where('department', 3)->whereNull('status')->get();
+    $ticket = Ticket::where('department', 3)->whereNull('status')->whereNull('pic')->get();
     foreach ($ticket as $key => $value) {
         # code...
         $getMonth = date("m", strtotime($value->created_at));
