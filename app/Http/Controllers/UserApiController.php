@@ -313,7 +313,7 @@ class UserApiController extends Controller
             // dump($get_user);
             DB::table('users')
                 ->where('id', $id)
-                ->update(['realization' => $realisasi, 'result' => $penyelesaian, 'status' => $status]);
+                ->update($dataUpdate);
 
             return response()->json(['success' => 'true']);
         }
