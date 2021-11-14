@@ -36,7 +36,7 @@ Route::get('tickets', function () {
     return $ticket;
 })->name('api.tickets');
 Route::get('tickets-proccess', function () {
-    $ticket = Ticket::where('department', 3)->whereNotNull('pic')->get();
+    $ticket = Ticket::where('department', 3)->whereNotNull('pic')->whereNull('status')->get();
     foreach ($ticket as $key => $value) {
         # code...
         $getMonth = date("m", strtotime($value->created_at));
