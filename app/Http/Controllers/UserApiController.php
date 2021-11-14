@@ -295,7 +295,7 @@ class UserApiController extends Controller
     {
         $id = $request->id;
         $realisasi = $request->realisasi;
-        $penyelesaian = $request->penyelesaian;
+        $penyelesaian = $request->penyelesaian=="" ? $request->penyelesaian : null;
         $status = null;
         if ($penyelesaian != null) {
             $status = 'Done';
