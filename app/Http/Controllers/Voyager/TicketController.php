@@ -280,7 +280,8 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
 
     public function edit(Request $request, $id)
     {
-        dd(Auth::user());
+        // dd(Auth::user());
+        $user = Auth::user();
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -324,7 +325,7 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
             $view = "voyager::$slug.edit-add";
         }
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable','user'));
     }
 
     // POST BR(E)AD
