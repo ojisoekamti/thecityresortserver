@@ -301,13 +301,19 @@ class UserApiController extends Controller
             $status = 'Done';
         }
         // dump($uid);
+        // $dataUpdate = array();
+        // array_push($dataUpdate, ['realization' => $realisasi]);
         $dataUpdate = [];
-        array_push($dataUpdate, ['realization' => $realisasi]);
+        $dataUpdate[0]->realization = $realisasi;
         if ($penyelesaian != null) {
-            array_push($dataUpdate, ['result' => $penyelesaian]);
+            $dataUpdate[0]->result = $penyelesaian;
+
+            // array_push($dataUpdate, ['result' => $penyelesaian]);
         }
         if ($status != null) {
-            array_push($dataUpdate, ['status' => $status]);
+            $dataUpdate[0]->status = $status;
+
+            // array_push($dataUpdate, ['status' => $status]);
         }
         if ($id != "") {
             // dump($get_user);
