@@ -289,4 +289,26 @@ class UserApiController extends Controller
         }
         return [];
     }
+
+
+    public function getUpdateTickets(Request $request)
+    {
+        $id = $request->id;
+        $realisasi = $request->realisasi;
+        $penyelesaian = $request->penyelesaian;
+        $status = null;
+        if ($penyelesaian != null) {
+            $status = 'Done';
+        }
+        // dump($uid);
+        if ($id != "") {
+            // dump($get_user);
+            DB::table('users')
+                ->where('id', $id)
+                ->update(['realization' => $realisasi, 'result' => $penyelesaian, 'status' => $status]);
+
+            return response()->json(['success' => 'true']);
+        }
+        return [];
+    }
 }
