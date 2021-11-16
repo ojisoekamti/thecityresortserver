@@ -60,12 +60,8 @@ class UserApiController extends Controller
         DB::table('switch_permissions')->insert([
             'pemohon' => $request->user_id,
             'date' => $curTime->format("Y-m-d H:i:s"),
-            'date_to' => $curTimeTo->format("Y-m-d H:i:s"),
             'description' => $request->description,
-            'from' => $request->time,
-            'to' => $request->timeTo,
             'delegate' => $delegate,
-            'status' => $status,
             'shift_sched' => $request->shift,
             'next_approver' => $delegate
         ]);
