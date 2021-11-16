@@ -61,12 +61,13 @@ class UserApiController extends Controller
             'pemohon' => $request->user_id,
             'date' => $curTime->format("Y-m-d H:i:s"),
             'date_to' => $curTimeTo->format("Y-m-d H:i:s"),
-            'description' => json_decode($request->description),
+            'description' => $request->description,
             'from' => $request->time,
             'to' => $request->timeTo,
             'delegate' => $delegate,
             'status' => $status,
-            'approval_flow'=>$approval_flow
+            'approval_flow'=>$approval_flow,
+            'next_qpprover'=>$delegate
         ]);
 
         return response()->json(json_decode($request));
@@ -114,12 +115,13 @@ class UserApiController extends Controller
             $tukarShift = SwitchPermission::where("pemohon", $uid)->first();
 
             if ($tukarShift) {
-
                 // $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
                 $pemohon = User::select('name')->where('id', $tukarShift->pemohon)->get();
                 $tukarShift->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
                 $delegate = User::select('name')->where('id', $tukarShift->delegate)->get();
                 $tukarShift->delegate = (count($delegate) > 0) ? $delegate[0]->name : "";
+                $next_approver = User::select('name')->where('id', $tukarShift->next_approver)->get();
+                $tukarShift->next_approver = (count($next_approver) > 0) ? $next_approver[0]->name : "";
             } else {
                 return [];
             }
@@ -318,5 +320,22 @@ class UserApiController extends Controller
             return response()->json($dataUpdate);
         }
         return response()->json($dataUpdate);
+    }
+
+    public function getApprovalWorkflow(Request $request)
+    {
+        # code...
+        
+        $uid = $request->uid;
+        $user_role = array();
+        $get_user = array();
+        $role = $request->role;
+        // dump($uid);
+        if ($uid != "") {
+            $user_role = DB::select("SELECT `t1`.`id` AS `id`, `t1`.`role_id` AS `role_id`, `t2`.`id` AS lev2, `t3`.`id` AS lev3 FROM((( `users` `t1` LEFT JOIN `users` `t2` ON (( `t2`.`id` = `t1`.`supervisor`))) LEFT JOIN `users` `t3` ON (( `t3`.`id` = `t2`.`supervisor` )))) WHERE `t2`.`name` IS NOT NULL AND t1.id = $uid GROUP BY `t1`.`id`, `t1`.`role_id`, `t1`.`name`");
+            return response()->json($user_role);
+        }
+        return [];
+        
     }
 }
