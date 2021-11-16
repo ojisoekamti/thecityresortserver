@@ -66,8 +66,9 @@ class UserApiController extends Controller
             'to' => $request->timeTo,
             'delegate' => $delegate,
             'status' => $status,
-            'approval_flow'=>$approval_flow,
-            'next_approver'=>$delegate
+            'shift_sched' => $request->shift,
+            'approval_flow' => $approval_flow,
+            'next_approver' => $delegate
         ]);
 
         return response()->json(json_decode($request));
@@ -325,7 +326,7 @@ class UserApiController extends Controller
     public function getApprovalWorkflow(Request $request)
     {
         # code...
-        
+
         $uid = $request->uid;
         $user_role = array();
         $get_user = array();
@@ -336,6 +337,5 @@ class UserApiController extends Controller
             return response()->json($user_role);
         }
         return [];
-        
     }
 }
