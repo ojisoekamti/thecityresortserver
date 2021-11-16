@@ -67,7 +67,7 @@ class UserApiController extends Controller
             'delegate' => $delegate,
             'status' => $status,
             'approval_flow'=>$approval_flow,
-            'next_qpprover'=>$delegate
+            'next_approver'=>$delegate
         ]);
 
         return response()->json(json_decode($request));
