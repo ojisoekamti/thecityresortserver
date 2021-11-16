@@ -67,7 +67,6 @@ class UserApiController extends Controller
             'delegate' => $delegate,
             'status' => $status,
             'shift_sched' => $request->shift,
-            'approval_flow' => $approval_flow,
             'next_approver' => $delegate
         ]);
 
