@@ -188,13 +188,7 @@ class UserApiController extends Controller
         $approve = $request->approve;
         // dump($uid);
         if ($uid != "") {
-            $tukarShift = SwitchPermission::where("delegate", $uid)->whereNull("action")->whereNull("approved_by")->first();
-            // dd($tukarShift);
-            $columnUpdate = 'approved_by';
-            if ($tukarShift == null) {
-                $tukarShift = SwitchPermission::where("approved_by", $uid)->whereNull("action")->first();
-                $columnUpdate = 'action';
-            }
+            $tukarShift = SwitchPermission::where("next_approver", $uid)->whereNull("action")->whereNull("approved_by")->first();
             if ($tukarShift) {
                 $pemohon = User::select('name')->where('id', $tukarShift->pemohon)->get();
                 $tukarShift->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
@@ -203,16 +197,6 @@ class UserApiController extends Controller
             } else {
                 return [];
             }
-            if ($approve != null && $tukarShift != null) {
-                $updateShift = DB::table('switch_permissions')
-                    ->where('id', $tukarShift->id);
-                if ($columnUpdate == 'approved_by') {
-                    $updateShift->update(['approved_by' => $uid]);
-                } else {
-                    $updateShift->update(['action' => 'Success']);
-                }
-            }
-            // print_r($tukarShift->id);
             return response()->json($tukarShift);
         }
         return [];
