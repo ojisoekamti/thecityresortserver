@@ -185,10 +185,8 @@ class UserApiController extends Controller
     public function approveShiftInfo(Request $request)
     {
         $uid = $request->uid;
-        $approve = $request->approve;
-        // dump($uid);
         if ($uid != "") {
-            $tukarShift = SwitchPermission::where("next_approver", $uid)->whereNull("action")->whereNull("approved_by")->first();
+            $tukarShift = SwitchPermission::where("next_approver", $uid)->first();
             if ($tukarShift) {
                 $pemohon = User::select('name')->where('id', $tukarShift->pemohon)->get();
                 $tukarShift->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
