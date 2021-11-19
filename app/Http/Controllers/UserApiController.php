@@ -242,17 +242,19 @@ class UserApiController extends Controller
         $get_user = array();
         $role = $request->role;
         // dump($uid);
+        $user = DB::select("SELECT DISTINCT id,user_roles.role_id,users.role_id FROM users LEFT JOIN user_roles ON user_roles.user_id = users.id
+        WHERE user_id =" . $uid);
         if ($uid != "") {
             $user_role = DB::select("SELECT t1.id AS id, t1.name AS lev1, COUNT(t2.name) as lev2, COUNT(t3.name) as lev3, COUNT(t4.name) as lev4 FROM cityresort_stag.users AS t1 LEFT JOIN cityresort_stag.users AS t2 ON t2.supervisor = t1.id LEFT JOIN cityresort_stag.users AS t3 ON t3.supervisor = t2.id LEFT JOIN cityresort_stag.users AS t4 ON t4.supervisor = t3.id WHERE (t1.id = " . $uid . " AND t1.role_id = " . $role . ") GROUP BY t1.name,t1.id");
             if ($user_role[0]->lev2 > 0 && $user_role[0]->lev3 > 0) {
                 // dump("dansek");
-                $get_user = DB::select("SELECT * FROM role_group WHERE lev2 > 0 AND lev3 > 0 AND role_id = " . $role . " AND id != " . $uid);
+                $get_user = DB::select("SELECT * FROM role_group LEFT JOIN user_roles ON user_roles.user_id = role_group.id WHERE lev2 > 0 AND lev3 > 0 AND role_group.role_id = " . $role . " AND id != " . $uid . " AND user_roles.role_id != " . $user[0]->role_id);
             } elseif ($user_role[0]->lev2 > 0) {
                 // dump('danru');
-                $get_user = DB::select("SELECT * FROM role_group WHERE lev2 > 0 AND lev3 = 0 AND role_id = " . $role . " AND id != " . $uid);
+                $get_user = DB::select("SELECT * FROM role_group LEFT JOIN user_roles ON user_roles.user_id = role_group.id WHERE lev2 > 0 AND lev3 = 0 AND role_group.role_id = " . $role . " AND id != " . $uid . " AND user_roles.role_id != " . $user[0]->role_id);
             } else {
                 // dump('anggota');
-                $get_user = DB::select("SELECT * FROM role_group WHERE lev2 = 0 AND lev3 = 0 AND role_id = " . $role . " AND id != " . $uid);
+                $get_user = DB::select("SELECT * FROM role_group LEFT JOIN user_roles ON user_roles.user_id = role_group.id WHERE lev2 = 0 AND lev3 = 0 AND role_group.role_id = " . $role . " AND id != " . $uid . " AND user_roles.role_id != " . $user[0]->role_id);
             }
             // dump($get_user);
             return response()->json($get_user);
