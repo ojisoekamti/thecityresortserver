@@ -248,13 +248,13 @@ class UserApiController extends Controller
             $user_role = DB::select("SELECT t1.id AS id, t1.name AS lev1, COUNT(t2.name) as lev2, COUNT(t3.name) as lev3, COUNT(t4.name) as lev4 FROM cityresort_stag.users AS t1 LEFT JOIN cityresort_stag.users AS t2 ON t2.supervisor = t1.id LEFT JOIN cityresort_stag.users AS t3 ON t3.supervisor = t2.id LEFT JOIN cityresort_stag.users AS t4 ON t4.supervisor = t3.id WHERE (t1.id = " . $uid . " AND t1.role_id = " . $role . ") GROUP BY t1.name,t1.id");
             if ($user_role[0]->lev2 > 0 && $user_role[0]->lev3 > 0) {
                 // dump("dansek");
-                $get_user = DB::select("SELECT DISTINCT id,role_group.role_id,lev1,lev2,lev3  FROM role_group LEFT JOIN user_roles ON user_roles.user_id = role_group.id WHERE lev2 > 0 AND lev3 > 0 AND role_group.role_id = " . $role . " AND id != " . $uid . " AND user_roles.role_id != " . $user[0]->role_id . "GROUP BY id,role_group.role_id,lev1,lev2,lev3,user_id");
+                $get_user = DB::select("SELECT id,role_group.role_id,lev1,lev2,lev3  FROM role_group LEFT JOIN user_roles ON user_roles.user_id = role_group.id WHERE lev2 > 0 AND lev3 > 0 AND role_group.role_id = " . $role . " AND id != " . $uid . " AND user_roles.role_id != " . $user[0]->role_id . "GROUP BY id,role_group.role_id,lev1,lev2,lev3,user_id");
             } elseif ($user_role[0]->lev2 > 0) {
                 // dump('danru');
-                $get_user = DB::select("SELECT DISTINCT id,role_group.role_id,lev1,lev2,lev3  FROM role_group LEFT JOIN user_roles ON user_roles.user_id = role_group.id WHERE lev2 > 0 AND lev3 = 0 AND role_group.role_id = " . $role . " AND id != " . $uid . " AND user_roles.role_id != " . $user[0]->role_id . "GROUP BY id,role_group.role_id,lev1,lev2,lev3,user_id");
+                $get_user = DB::select("SELECT id,role_group.role_id,lev1,lev2,lev3  FROM role_group LEFT JOIN user_roles ON user_roles.user_id = role_group.id WHERE lev2 > 0 AND lev3 = 0 AND role_group.role_id = " . $role . " AND id != " . $uid . " AND user_roles.role_id != " . $user[0]->role_id . "GROUP BY id,role_group.role_id,lev1,lev2,lev3,user_id");
             } else {
                 // dump('anggota');
-                $get_user = DB::select("SELECT DISTINCT id,role_group.role_id,lev1,lev2,lev3  FROM role_group LEFT JOIN user_roles ON user_roles.user_id = role_group.id WHERE lev2 = 0 AND lev3 = 0 AND role_group.role_id = " . $role . " AND id != " . $uid . " AND user_roles.role_id != " . $user[0]->role_id . "GROUP BY id,role_group.role_id,lev1,lev2,lev3,user_id");
+                $get_user = DB::select("SELECT id,role_group.role_id,lev1,lev2,lev3  FROM role_group LEFT JOIN user_roles ON user_roles.user_id = role_group.id WHERE lev2 = 0 AND lev3 = 0 AND role_group.role_id = " . $role . " AND id != " . $uid . " AND user_roles.role_id != " . $user[0]->role_id . "GROUP BY id,role_group.role_id,lev1,lev2,lev3,user_id");
             }
             // dump($get_user);
             return response()->json($get_user);
