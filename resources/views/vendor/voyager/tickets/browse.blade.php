@@ -122,9 +122,6 @@
                                             @endif
                                             @foreach ($dataType->browseRows as $row)
                                                 @php
-                                                    dump($row->field);
-                                                @endphp
-                                                @php
                                                     if ($data->{$row->field . '_browse'}) {
                                                         $data->{$row->field} = $data->{$row->field . '_browse'};
                                                     }
