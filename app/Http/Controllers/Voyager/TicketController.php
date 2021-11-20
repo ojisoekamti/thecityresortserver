@@ -37,11 +37,10 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
         // GET THE SLUG, ex. 'posts', 'pages', etc.
 
         $user = Auth::user();
+        $role_group = [];
         $role_group = DB::table("user_roles")->where('user_id', $user->id)->get();
-        dump(count($role_group));
         if (count($role_group) == 0) {
-            $role_group[0]->role_id = $user->role_id;
-            dump($role_group[0]);
+            $role_group->role_id = $user->role_id;
         }
         $slug = $this->getSlug($request);
 
@@ -292,10 +291,9 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
     {
         // dd(Auth::user());
         $user = Auth::user();
-        $role_group = DB::table("user_roles")->where('user_id', $user->id)->get();
-        if (count($role_group) == 0) {
-            $role_group[0]->role_id = $user->role_id;
-        }
+        $roleGroup = [];
+        $roleGroup = DB::table("user_roles")->where('user_id', $user->id)->get();
+
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -332,14 +330,18 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
 
         // Eagerload Relations
         $this->eagerLoadRelations($dataTypeContent, $dataType, 'edit', $isModelTranslatable);
-
         $view = 'voyager::bread.edit-add';
 
         if (view()->exists("voyager::$slug.edit-add")) {
             $view = "voyager::$slug.edit-add";
         }
+        // dd($roleGroup);
+        if (count($roleGroup) == 0) {
+            $roleGroup->role_id = $user->role_id;
+        }
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'user', 'role_group'));
+        $dataTypeContent->role_group = $roleGroup;
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'user'));
     }
 
     // POST BR(E)AD
