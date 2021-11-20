@@ -2,6 +2,7 @@
 $edit = !is_null($dataTypeContent->getKey());
 $add = is_null($dataTypeContent->getKey());
 $role = $user->role_id;
+$role_id_group = $role_group[0]->role_id ?? '';
 // dump($user->role_id);
 @endphp
 @extends('voyager::master')
@@ -61,7 +62,7 @@ $role = $user->role_id;
                                 @php
                                     // dump($row->field=='ticket_belongsto_user_relationship');
                                     // dump($row->field);
-                                    if ($row->field == 'ticket_belongsto_user_relationship' && $role_group[0]->role_id ?? '' != 14) {
+                                    if ($row->field == 'ticket_belongsto_user_relationship' && $role_id_group != 14) {
                                         continue;
                                     }
                                     
@@ -82,7 +83,7 @@ $role = $user->role_id;
                                     control-label" for="name">{{ $row->getTranslatedAttribute('display_name') }}</label>
 
                                     @include('voyager::multilingual.input-hidden-bread-edit-add')
-                                    @if ($row->field != 'ticket_belongsto_user_relationship' && $role_group[0]->role_id ?? '' != 14)
+                                    @if ($row->field != 'ticket_belongsto_user_relationship' && $role_id_group != 14)
 
                                         @if (isset($row->details->view))
                                             @include($row->details->view, ['row' => $row, 'dataType' => $dataType,
