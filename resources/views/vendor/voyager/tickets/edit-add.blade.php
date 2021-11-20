@@ -2,7 +2,7 @@
 $edit = !is_null($dataTypeContent->getKey());
 $add = is_null($dataTypeContent->getKey());
 $role = $user->role_id;
-$role_id_group = $role_group[0]->role_id ?? '';
+$role_id_group = count($role_group) > 0 ? $role_group[0]->role_id : '';
 // dump($user->role_id);
 @endphp
 @extends('voyager::master')
