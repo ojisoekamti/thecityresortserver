@@ -172,7 +172,8 @@ $role_id_group = $role_group[0]->role_id ?? '';
                                             @include('voyager::multilingual.input-hidden-bread-read')
                                             <p>{{ $dataTypeContent->{$row->field} }}</p>
                                         @endif
-                                    @elseif (isset($row->details->view))
+                                    @endif
+                                    @if (isset($row->details->view))
                                         @include($row->details->view, ['row' => $row, 'dataType' => $dataType,
                                         'dataTypeContent' => $dataTypeContent, 'content' => $dataTypeContent->{$row->field},
                                         'action' => ($edit ? 'edit' : 'add'), 'view' => ($edit ? 'edit' : 'add'), 'options'
