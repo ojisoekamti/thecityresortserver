@@ -83,7 +83,7 @@ $role_id_group = $role_group[0]->role_id ?? '';
                                     control-label" for="name">{{ $row->getTranslatedAttribute('display_name') }}</label>
 
                                     @include('voyager::multilingual.input-hidden-bread-edit-add')
-                                    @if ($row->field != 'ticket_belongsto_user_relationship' && $role_id_group != 14)
+                                    @if ($row->field != 'ticket_belongsto_user_relationship' && $role_id_group == 14)
 
                                         @if (isset($row->details->view))
                                             @include($row->details->view, ['row' => $row, 'dataType' => $dataType,
