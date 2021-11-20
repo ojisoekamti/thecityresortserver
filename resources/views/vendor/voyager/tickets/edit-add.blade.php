@@ -174,7 +174,7 @@ $role_id_group = $role_group[0]->role_id ?? '';
                                         @endif
                                     @endif
                                     @if (isset($row->details->view))
-                                        @if ($role_id_group == 14)
+                                        @if ($row->field != 'ticket_belongsto_user_relationship' && $role_id_group == 14)
                                             <div hidden>
                                                 @include($row->details->view, ['row' => $row, 'dataType' => $dataType,
                                                 'dataTypeContent' => $dataTypeContent, 'content' =>
@@ -192,7 +192,7 @@ $role_id_group = $role_group[0]->role_id ?? '';
                                             => $row->details])
                                         @endif
                                     @elseif ($row->type == 'relationship')
-                                        @if ($role_id_group == 14)
+                                        @if ($row->field != 'ticket_belongsto_user_relationship' && $role_id_group == 14)
                                             <div hidden>
                                                 @include('voyager::formfields.relationship', ['options' => $row->details])
                                             </div>
@@ -200,7 +200,7 @@ $role_id_group = $role_group[0]->role_id ?? '';
                                             @include('voyager::formfields.relationship', ['options' => $row->details])
                                         @endif
                                     @else
-                                        @if ($role_id_group == 14)
+                                        @if ($row->field != 'ticket_belongsto_user_relationship' && $role_id_group == 14)
                                             <div hidden>
                                                 {!! app('voyager')->formField($row, $dataType, $dataTypeContent) !!}
                                             </div>
