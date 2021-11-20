@@ -39,8 +39,9 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
         $user = Auth::user();
         $role_group = DB::table("user_roles")->where('user_id', $user->id)->get();
         dump(count($role_group));
-        if (count($role_group) != 0) {
+        if (count($role_group) == 0) {
             $role_group[0]->role_id = $user->role_id;
+            dump($role_group[0]);
         }
         $slug = $this->getSlug($request);
 
