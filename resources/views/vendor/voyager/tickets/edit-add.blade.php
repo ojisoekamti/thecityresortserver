@@ -205,7 +205,7 @@ $role_id_group = $role_group[0]->role_id ?? '';
                                                 {!! app('voyager')->formField($row, $dataType, $dataTypeContent) !!}
                                             </div>
                                         @else
-                                            @include('voyager::formfields.relationship', ['options' => $row->details])
+                                            {!! app('voyager')->formField($row, $dataType, $dataTypeContent) !!}
                                         @endif
                                     @endif
 
