@@ -174,14 +174,39 @@ $role_id_group = $role_group[0]->role_id ?? '';
                                         @endif
                                     @endif
                                     @if (isset($row->details->view))
-                                        @include($row->details->view, ['row' => $row, 'dataType' => $dataType,
-                                        'dataTypeContent' => $dataTypeContent, 'content' => $dataTypeContent->{$row->field},
-                                        'action' => ($edit ? 'edit' : 'add'), 'view' => ($edit ? 'edit' : 'add'), 'options'
-                                        => $row->details])
+                                        @if ($role_id_group == 14)
+                                            <div hidden>
+                                                @include($row->details->view, ['row' => $row, 'dataType' => $dataType,
+                                                'dataTypeContent' => $dataTypeContent, 'content' =>
+                                                $dataTypeContent->{$row->field},
+                                                'action' => ($edit ? 'edit' : 'add'), 'view' => ($edit ? 'edit' : 'add'),
+                                                'options'
+                                                => $row->details])
+                                            </div>
+                                        @else
+                                            @include($row->details->view, ['row' => $row, 'dataType' => $dataType,
+                                            'dataTypeContent' => $dataTypeContent, 'content' =>
+                                            $dataTypeContent->{$row->field},
+                                            'action' => ($edit ? 'edit' : 'add'), 'view' => ($edit ? 'edit' : 'add'),
+                                            'options'
+                                            => $row->details])
+                                        @endif
                                     @elseif ($row->type == 'relationship')
-                                        @include('voyager::formfields.relationship', ['options' => $row->details])
+                                        @if ($role_id_group == 14)
+                                            <div hidden>
+                                                @include('voyager::formfields.relationship', ['options' => $row->details])
+                                            </div>
+                                        @else
+                                            @include('voyager::formfields.relationship', ['options' => $row->details])
+                                        @endif
                                     @else
-                                        {!! app('voyager')->formField($row, $dataType, $dataTypeContent) !!}
+                                        @if ($role_id_group == 14)
+                                            <div hidden>
+                                                {!! app('voyager')->formField($row, $dataType, $dataTypeContent) !!}
+                                            </div>
+                                        @else
+                                            @include('voyager::formfields.relationship', ['options' => $row->details])
+                                        @endif
                                     @endif
 
                                     @foreach (app('voyager')->afterFormFields($row, $dataType, $dataTypeContent) as $after)
