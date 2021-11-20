@@ -35,6 +35,9 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
     public function index(Request $request)
     {
         // GET THE SLUG, ex. 'posts', 'pages', etc.
+
+        $user = Auth::user();
+        $role_group = DB::table("user_roles")->where('user_id', $user->id)->get();
         $slug = $this->getSlug($request);
 
         // GET THE DataType based on the slug
@@ -198,7 +201,9 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
             'defaultSearchKey',
             'usesSoftDeletes',
             'showSoftDeleted',
-            'showCheckboxColumn'
+            'showCheckboxColumn',
+            'user',
+            'role_group'
         ));
     }
 
@@ -282,6 +287,7 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
     {
         // dd(Auth::user());
         $user = Auth::user();
+        $role_group = DB::table("user_roles")->where('user_id', $user->id)->get();
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -325,7 +331,7 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
             $view = "voyager::$slug.edit-add";
         }
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable','user'));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'user', 'role_group'));
     }
 
     // POST BR(E)AD
@@ -428,7 +434,7 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
             $view = "voyager::$slug.edit-add";
         }
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable','user'));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'user'));
     }
 
     /**
