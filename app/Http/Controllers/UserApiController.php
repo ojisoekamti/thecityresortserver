@@ -62,7 +62,7 @@ class UserApiController extends Controller
             DB::table('switch_permissions')
                 ->where('id', $id)
                 ->update([
-                    'next_approver' => $request->user_id,
+                    'next_approver' => $request->id_pemohon,
                     'date_to' => $curTime->format("Y-m-d H:i:s"), 'status' => 1
                 ]);
         } else {
