@@ -192,7 +192,7 @@ class UserApiController extends Controller
     {
         $uid = $request->uid;
         if ($uid != "") {
-            $tukarShift = SwitchPermission::where("next_approver", $uid)->whereNull("status")->get();
+            $tukarShift = SwitchPermission::where("next_approver", $uid)->where("status",1)->get();
             if ($tukarShift) {
                 foreach ($tukarShift as $row) {
                     # code...
