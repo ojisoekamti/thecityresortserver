@@ -7,6 +7,8 @@ if ($role_id_group == null) {
     $role_id_group = $user->role_id;
 } elseif (count($role_id_group) > 0) {
     $role_id_group = $role_id_group[0]->role_id;
+} elseif ($role_id_group->role_id > 0) {
+    $role_id_group = $role_id_group->role_id;
 }
 // dd($role_id_group);
 // dump($user->role_id);
