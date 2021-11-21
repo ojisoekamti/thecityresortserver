@@ -108,19 +108,23 @@ class UserApiController extends Controller
         $uid = $request->uid;
         $tukarShift = array();
         if ($uid != "") {
-            $tukarShift = SwitchPermission::where("pemohon", $uid)->whereNull("status")->whereNotNull("next_approver")->first();
+            $tukarShift = SwitchPermission::where("pemohon", $uid)->where("status", '!=', 3)->first();
 
             if ($tukarShift) {
                 // $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
-                $pemohon = User::select('name')->where('id', $tukarShift->pemohon)->get();
-                $tukarShift->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
-                $delegate = User::select('name')->where('id', $tukarShift->delegate)->get();
-                $tukarShift->delegate = (count($delegate) > 0) ? $delegate[0]->name : "";
-                $next_approver = User::select('name')->where('id', $tukarShift->next_approver)->get();
-                $tukarShift->next_approver = (count($next_approver) > 0) ? $next_approver[0]->name : "";
             } else {
-                return [];
+                $tukarShift = SwitchPermission::where("delegate", $uid)->where("status", '!=', 3)->first();
+                if ($tukarShift) {
+                } else {
+                    return [];
+                }
             }
+            $pemohon = User::select('name')->where('id', $tukarShift->pemohon)->get();
+            $tukarShift->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
+            $delegate = User::select('name')->where('id', $tukarShift->delegate)->get();
+            $tukarShift->delegate = (count($delegate) > 0) ? $delegate[0]->name : "";
+            $next_approver = User::select('name')->where('id', $tukarShift->next_approver)->get();
+            $tukarShift->next_approver = (count($next_approver) > 0) ? $next_approver[0]->name : "";
             return response()->json(json_decode($tukarShift));
         }
         return [];
