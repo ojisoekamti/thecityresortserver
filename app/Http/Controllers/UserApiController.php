@@ -190,7 +190,7 @@ class UserApiController extends Controller
     {
         $uid = $request->uid;
         if ($uid != "") {
-            $tukarShift = SwitchPermission::where("next_approver", $uid)->where("status",1)->get();
+            $tukarShift = SwitchPermission::where("next_approver", $uid)->where("status", 1)->get();
             if ($tukarShift) {
                 foreach ($tukarShift as $row) {
                     # code...
@@ -333,5 +333,45 @@ class UserApiController extends Controller
         // dump($uid);
         $tukarShift = SwitchPermission::where("next_approver", $uid)->get();
         return [];
+    }
+    public function approveTukarShift(Request $request)
+    {
+
+        $id = $request->id;
+        $uid = $request->uid;
+        $approve = $request->approve;
+        $status = false;
+        $tukarShift = SwitchPermission::where("id", $id)->first();
+        $user_role = DB::select("SELECT `t1`.`id` AS `id`, `t1`.`role_id` AS `role_id`, `t2`.`id` AS lev2, `t3`.`id` AS lev3 FROM((( `users` `t1` LEFT JOIN `users` `t2` ON (( `t2`.`id` = `t1`.`supervisor`))) LEFT JOIN `users` `t3` ON (( `t3`.`id` = `t2`.`supervisor` )))) WHERE `t2`.`name` IS NOT NULL AND t1.id = $tukarShift->pemohon GROUP BY `t1`.`id`, `t1`.`role_id`, `t1`.`name`,`t2`.`id`,`t3`.`id` limit 1");
+        $user_role_delegate = DB::select("SELECT `t1`.`id` AS `id`, `t1`.`role_id` AS `role_id`, `t2`.`id` AS lev2, `t3`.`id` AS lev3 FROM((( `users` `t1` LEFT JOIN `users` `t2` ON (( `t2`.`id` = `t1`.`supervisor`))) LEFT JOIN `users` `t3` ON (( `t3`.`id` = `t2`.`supervisor` )))) WHERE `t2`.`name` IS NOT NULL AND t1.id = $tukarShift->delegate GROUP BY `t1`.`id`, `t1`.`role_id`, `t1`.`name`,`t2`.`id`,`t3`.`id` limit 1");
+        $lev = $user_role[0]->lev2;
+        $lev2 = $user_role_delegate[0]->lev2;
+        $lev3 = $user_role[0]->lev3;
+        $next_approver = $lev;
+        dump($approve);
+        dump($uid);
+        if ($uid == $lev) {
+            $next_approver = $lev2;
+        } else if ($uid == $lev2) {
+            $next_approver = 13;
+        } else if ($uid == 13) {
+            $next_approver = $lev3;
+        }
+        if ($uid == $lev3) {
+            $status = 3;
+        }
+        if ($approve == "false") {
+            $status = 4;
+        }
+        if ($status > 0) {
+            DB::table('switch_permissions')
+                ->where('id', $id)
+                ->update(['next_approver' => null, 'status' => $status]);
+        } else if ($status == false) {
+            DB::table('switch_permissions')
+                ->where('id', $id)
+                ->update(['next_approver' => $next_approver]);
+        }
+        return response()->json(["Success" => true]);
     }
 }
