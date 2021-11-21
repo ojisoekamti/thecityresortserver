@@ -296,6 +296,8 @@ class UserApiController extends Controller
     {
         $id = $request->id;
         $realisasi = $request->realisasi;
+        $realization_image = $request->realization_image;
+        $result_image = $request->result_image;
         $penyelesaian = $request->penyelesaian != "" ? $request->penyelesaian : null;
         $status = null;
         if ($penyelesaian != null) {
@@ -308,6 +310,8 @@ class UserApiController extends Controller
         if ($status != null) {
             $dataUpdate['status'] = $status;
         }
+        $dataUpdate['realization_image'] = $realization_image;
+        $dataUpdate['result_image'] =  $result_image;
         if ($id != "") {
             // dump($get_user);
             DB::table('tickets')
