@@ -52,21 +52,31 @@ class UserApiController extends Controller
         $curTimeTo = new \DateTime($request->dateTo);
         $delegate = (string)$request->delegate;
         $status = $request->status;
+        $id = $request->id;
         $approval_flow = $request->approval_flow;
         $delegate = DB::select("SELECT * from users where users.name LIKE '%$delegate%'");
         if (count($delegate) > 0) {
             $delegate = $delegate[0]->id;
         }
-        DB::table('switch_permissions')->insert([
-            'pemohon' => $request->user_id,
-            'date' => $curTime->format("Y-m-d H:i:s"),
-            'description' => $request->description,
-            'delegate' => $delegate,
-            'shift_sched' => $request->shift,
-            'next_approver' => $delegate,
-            'status' => 1
-        ]);
+        if ($id != "") {
+            DB::table('switch_permissions')
+                ->where('id', $id)
+                ->update([
+                    'next_approver' => $request->user_id,
+                    'date_to' => $curTime->format("Y-m-d H:i:s"), 'status' => 1
+                ]);
+        } else {
 
+            DB::table('switch_permissions')->insert([
+                'pemohon' => $request->user_id,
+                'date' => $curTime->format("Y-m-d H:i:s"),
+                'description' => $request->description,
+                'delegate' => $delegate,
+                'shift_sched' => $request->shift,
+                'next_approver' => $delegate,
+                'status' => 1
+            ]);
+        }
         return response()->json(json_decode($request));
     }
 
