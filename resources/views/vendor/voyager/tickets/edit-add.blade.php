@@ -3,9 +3,12 @@ $edit = !is_null($dataTypeContent->getKey());
 $add = is_null($dataTypeContent->getKey());
 $role = $user->role_id;
 $role_id_group = $dataTypeContent->role_group;
-if (count($role_id_group) > 0) {
+if ($role_id_group == null) {
+    $role_id_group = $user->role_id;
+} elseif (count($role_id_group) > 0) {
     $role_id_group = $role_id_group[0]->role_id;
 }
+// dd($role_id_group);
 // dump($user->role_id);
 @endphp
 @extends('voyager::master')
