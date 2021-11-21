@@ -63,7 +63,8 @@ class UserApiController extends Controller
             'description' => $request->description,
             'delegate' => $delegate,
             'shift_sched' => $request->shift,
-            'next_approver' => $delegate
+            'next_approver' => $delegate,
+            'status' => 1
         ]);
 
         return response()->json(json_decode($request));
@@ -108,12 +109,13 @@ class UserApiController extends Controller
         $uid = $request->uid;
         $tukarShift = array();
         if ($uid != "") {
-            $tukarShift = SwitchPermission::where("pemohon", $uid)->where("status", '!=', 3)->first();
+            $tukarShift = SwitchPermission::where("pemohon", $uid)->where("switch_perimission.status", '!=', '3')->first();
 
+            dump($tukarShift);
             if ($tukarShift) {
                 // $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
             } else {
-                $tukarShift = SwitchPermission::where("delegate", $uid)->where("status", '!=', 3)->first();
+                $tukarShift = SwitchPermission::where("delegate", $uid)->where("switch_perimission.status", '!=', '3')->first();
                 if ($tukarShift) {
                 } else {
                     return [];
