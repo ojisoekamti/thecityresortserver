@@ -348,8 +348,6 @@ class UserApiController extends Controller
         $lev2 = $user_role_delegate[0]->lev2;
         $lev3 = $user_role[0]->lev3;
         $next_approver = $lev;
-        dump($approve);
-        dump($uid);
         if ($uid == $lev) {
             $next_approver = $lev2;
         } else if ($uid == $lev2) {
