@@ -186,12 +186,15 @@ class UserApiController extends Controller
     {
         $uid = $request->uid;
         if ($uid != "") {
-            $tukarShift = SwitchPermission::where("next_approver", $uid)->first();
+            $tukarShift = SwitchPermission::where("next_approver", $uid)->get();
             if ($tukarShift) {
-                $pemohon = User::select('name')->where('id', $tukarShift->pemohon)->get();
-                $tukarShift->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
-                $delegate = User::select('name')->where('id', $tukarShift->delegate)->get();
-                $tukarShift->delegate = (count($delegate) > 0) ? $delegate[0]->name : "";
+                foreach ($tukarShift as $row) {
+                    # code...
+                    $pemohon = User::select('name')->where('id', $row->pemohon)->get();
+                    $row->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
+                    $delegate = User::select('name')->where('id', $row->delegate)->get();
+                    $row->delegate = (count($delegate) > 0) ? $delegate[0]->name : "";
+                }
             } else {
                 return [];
             }
@@ -315,6 +318,16 @@ class UserApiController extends Controller
             $user_role = DB::select("SELECT `t1`.`id` AS `id`, `t1`.`role_id` AS `role_id`, `t2`.`id` AS lev2, `t3`.`id` AS lev3 FROM((( `users` `t1` LEFT JOIN `users` `t2` ON (( `t2`.`id` = `t1`.`supervisor`))) LEFT JOIN `users` `t3` ON (( `t3`.`id` = `t2`.`supervisor` )))) WHERE `t2`.`name` IS NOT NULL AND t1.id = $uid GROUP BY `t1`.`id`, `t1`.`role_id`, `t1`.`name`");
             return response()->json($user_role);
         }
+        return [];
+    }
+    public function getListApproval(Request $request)
+    {
+        $uid = $request->uid;
+        $user_role = array();
+        $get_user = array();
+        $role = $request->role;
+        // dump($uid);
+        $tukarShift = SwitchPermission::where("next_approver", $uid)->get();
         return [];
     }
 }
