@@ -24,7 +24,7 @@
         </tr>
     </table>
     <br>
-    {{ url('storage') }}/{{ $image_str }}
+    {{ base64_encode(file_get_contents(public_path('storage/'.$image_str))) }}
     <p>Pada hari , {{ date('d', strtotime($date)) }} {{ date('M', strtotime($date)) }}
         {{ date('Y', strtotime($date)) }} <br>Pukul
         {{ date('h:i:sa', strtotime($date)) }} WIB</p>
