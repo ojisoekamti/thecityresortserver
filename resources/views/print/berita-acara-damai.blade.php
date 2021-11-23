@@ -21,13 +21,13 @@
                     style="width: 130px" alt=""></td>
         </tr>
     </table>
-    {{ url('') }}/{{ setting('admin.logo_security') }}
     <p>Pada hari {{ hari_ini($datetime) }}, Tanggal {{ date('d', strtotime($datetime)) }} Bulan
         {{ date('F', strtotime($datetime)) }} Tahun {{ date('Y', strtotime($datetime)) }} <br> Pukul
         {{ date('h:i:sa', strtotime($datetime)) }} WIB</p>
     <p>Bertempat di : {{ $bertempat_di }}</p>
     <p>Perihal : {{ $perihal }}</p>
 
+    {{ url('') }}/{{ setting('admin.logo_security') }}
     <table style="width: 100%">
         <tr>
             <td colspan="3">Yang bertanda tangan dibawah ini :</td>
