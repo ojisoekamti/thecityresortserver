@@ -19,19 +19,29 @@ class LaporanController extends Controller
             $results->mengetahui = $dataMengetahui->name;
         }
         $pdf = \PDF::loadView('pdf', $results);
+        $pdf->getDomPDF()->setHttpContext(
+            stream_context_create([
+                'ssl' => [
+                    'allow_self_signed' => TRUE,
+                    'verify_peer' => FALSE,
+                    'verify_peer_name' => FALSE,
+                ]
+            ])
+        );
+
         return $pdf->stream('berita-acara.pdf');
     }
     public function penertibanBarang($id)
     {
         $results = BeritaAcaraPenertibanBarang::where('id', $id)
-        ->first();
+            ->first();
         $pdf = \PDF::loadView('print/penertiban-barang-print', $results);
         return $pdf->stream('penertiban-barang-print.pdf');
     }
     public function beritaAcaraDamai($id)
     {
         $results = BeritaAcaraDamai::where('id', $id)
-        ->first();
+            ->first();
         $pdf = \PDF::loadView('print/berita-acara-damai', $results);
         return $pdf->stream('berita-acara-damai.pdf');
     }
