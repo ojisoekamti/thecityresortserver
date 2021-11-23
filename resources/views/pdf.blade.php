@@ -10,19 +10,21 @@
 
 <body>
     <table style="width:100%">
-
+        @php
+            $image_str = str_replace('\\', '/', setting('admin.logo_security'));
+        @endphp
         <tr>
-            <td style="text-align: left;width:20%"><img src="{{ url('storage') }}/{{ setting('admin.logo_security') }}"
+            <td style="text-align: left;width:20%"><img src="{{ url('storage') }}/{{ $image_str }}"
                     style="width: 70px" alt=""></td>
             <td style="text-align: center;width:80%">DIVISI SECURITY <br><u>BERITA ACARA
                     KEJADIAN</u><br>No.{{ $id }}/BAKSEC.
                 CRR/{{ date('M', strtotime($date)) }}/{{ date('Y', strtotime($date)) }}</td>
-            <td style="text-align: right;width:20%"><img src="{{ url('storage') }}/{{ setting('admin.logo_crr') }}"
+            <td style="text-align: right;width:20%"><img src="{{ url('storage') }}/{{ $image_str }}"
                     style="width: 130px" alt=""></td>
         </tr>
     </table>
     <br>
-    {{ url('storage') }}/{{ setting('admin.logo_security') }}
+    {{ url('storage') }}/{{ $image_str }}
     <p>Pada hari {{ hari_ini() }}, {{ date('d', strtotime($date)) }} {{ date('M', strtotime($date)) }}
         {{ date('Y', strtotime($date)) }} <br>Pukul
         {{ date('h:i:sa', strtotime($date)) }} WIB</p>
