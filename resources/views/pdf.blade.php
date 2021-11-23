@@ -25,7 +25,7 @@
     </table>
     <br>
     {{ url('storage') }}/{{ $image_str }}
-    <p>Pada hari {{ hari_ini() }}, {{ date('d', strtotime($date)) }} {{ date('M', strtotime($date)) }}
+    <p>Pada hari , {{ date('d', strtotime($date)) }} {{ date('M', strtotime($date)) }}
         {{ date('Y', strtotime($date)) }} <br>Pukul
         {{ date('h:i:sa', strtotime($date)) }} WIB</p>
     <p>Bertempatdi : {{ $bertempatdi }}</p>
