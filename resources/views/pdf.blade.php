@@ -23,7 +23,7 @@
                 CRR/{{ date('M', strtotime($date)) }}/{{ date('Y', strtotime($date)) }}</td>
             <td style="text-align: right;width:20%"><img
                     src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('storage/' . $image_str_crr))) }}"
-                    style="width: 70px" alt=""></td>
+                    style="width: 130px" alt=""></td>
         </tr>
     </table>
     <br>
