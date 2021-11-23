@@ -12,12 +12,12 @@
     <table style="width:100%">
 
         <tr>
-            <td style="text-align: left;width:20%"><img src="{{ url('') }}/{{ setting('admin.logo_security') }}"
+            <td style="text-align: left;width:20%"><img src="{{ url('storage') }}/{{ setting('admin.logo_security') }}"
                     style="width: 70px" alt=""></td>
             <td style="text-align: center;width:80%">DIVISI SECURITY <br><u>BERITA ACARA
                     KEJADIAN</u><br>No.{{ $id }}/BAKSEC.
                 CRR/{{ date('M', strtotime($date)) }}/{{ date('Y', strtotime($date)) }}</td>
-            <td style="text-align: right;width:20%"><img src="{{ url('') }}/{{ setting('admin.logo_crr') }}"
+            <td style="text-align: right;width:20%"><img src="{{ url('storage') }}/{{ setting('admin.logo_crr') }}"
                     style="width: 130px" alt=""></td>
         </tr>
     </table>
