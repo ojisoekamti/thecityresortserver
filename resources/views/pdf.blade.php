@@ -14,7 +14,7 @@
             $image_str = str_replace('\\', '/', setting('admin.logo_security'));
         @endphp
         <tr>
-            <td style="text-align: left;width:20%"><img src="{{ url('storage') }}/{{ $image_str }}"
+            <td style="text-align: left;width:20%"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('storage/'.$image_str))) }}"
                     style="width: 70px" alt=""></td>
             <td style="text-align: center;width:80%">DIVISI SECURITY <br><u>BERITA ACARA
                     KEJADIAN</u><br>No.{{ $id }}/BAKSEC.
