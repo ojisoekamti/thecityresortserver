@@ -26,7 +26,7 @@
         {{ date('h:i:sa', strtotime($datetime)) }} WIB</p>
     <p>Bertempat di : {{ $bertempat_di }}</p>
     <p>Perihal : {{ $perihal }}</p>
-
+test
     {{ url('') }}/{{ setting('admin.logo_security') }}
     <table style="width: 100%">
         <tr>
