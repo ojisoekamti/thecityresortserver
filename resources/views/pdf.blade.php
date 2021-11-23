@@ -27,7 +27,7 @@
         </tr>
     </table>
     <br>
-    <p>Pada hari , {{ date('d', strtotime($date)) }} {{ date('M', strtotime($date)) }}
+    <p>Pada hari {{ hari_ini($datetime) }}, {{ date('d', strtotime($date)) }} {{ date('M', strtotime($date)) }}
         {{ date('Y', strtotime($date)) }} <br>Pukul
         {{ date('h:i:sa', strtotime($date)) }} WIB</p>
     <p>Bertempatdi : {{ $bertempatdi }}</p>
@@ -61,3 +61,48 @@
 </body>
 
 </html>
+
+
+<?php
+
+function hari_ini($tgl)
+{
+    $hari = date('D', strtotime($tgl));
+
+    switch ($hari) {
+        case 'Sun':
+            $hari_ini = 'Minggu';
+            break;
+
+        case 'Mon':
+            $hari_ini = 'Senin';
+            break;
+
+        case 'Tue':
+            $hari_ini = 'Selasa';
+            break;
+
+        case 'Wed':
+            $hari_ini = 'Rabu';
+            break;
+
+        case 'Thu':
+            $hari_ini = 'Kamis';
+            break;
+
+        case 'Fri':
+            $hari_ini = 'Jumat';
+            break;
+
+        case 'Sat':
+            $hari_ini = 'Sabtu';
+            break;
+
+        default:
+            $hari_ini = 'Tidak di ketahui';
+            break;
+    }
+
+    return $hari_ini;
+}
+?>
