@@ -28,7 +28,7 @@ class LaporanController extends Controller
                 ]
             ])
         );
-        return view('pdf', $results);
+        //return view('pdf', $results);
         return $pdf->stream('berita-acara.pdf');
     }
     public function penertibanBarang($id)
