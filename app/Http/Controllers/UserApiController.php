@@ -283,15 +283,25 @@ class UserApiController extends Controller
     public function getTickets(Request $request)
     {
         $uid = $request->uid;
+        $ticket = array();
         if ($uid != "") {
             $ticket = Ticket::where('id_pic', $uid)->whereNull('status')->get();
             if (count($ticket) == 0) {
                 $ticket = Ticket::where('tickket_pics.user_id', $uid)
-                ->whereNull('status')
-                ->join('tickket_pics', 'tickket_pics.ticket_id', '=', 'tickets.id')
-                ->get();
+                    ->whereNull('status')
+                    ->join('tickket_pics', 'tickket_pics.ticket_id', '=', 'tickets.id')
+                    ->get();
             }
             return response()->json($ticket);
+        }
+        foreach ($ticket as $key => $value) {
+            # code...
+            $getMonth = date("m", strtotime($value->created_at));
+            $getDate = date("d", strtotime($value->created_at));
+            $getYear = date("Y", strtotime($value->created_at));
+            $ticket[$key]->tranNumber = "SCR-" . $getMonth . $getDate . $getYear . $value->id;
+            $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
+            $ticket[$key]->unit_name = (count($unitData) > 0) ? $unitData[0]->unit_number : "";
         }
         return [];
     }
