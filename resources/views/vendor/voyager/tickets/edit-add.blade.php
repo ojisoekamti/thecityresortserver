@@ -67,6 +67,7 @@ if ($role_id_group == null) {
 
                             @foreach ($dataTypeRows as $row)
                                 <!-- GET THE DISPLAY OPTIONS -->
+                                @dump($row->field)
                                 @php
                                     // dump($row->field=='ticket_belongsto_user_relationship');
                                     // dump($row->field);
