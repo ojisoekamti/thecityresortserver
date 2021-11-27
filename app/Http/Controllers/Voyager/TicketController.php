@@ -351,7 +351,6 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
 
-        dd($dataType);
         // Compatibility with Model binding.
         $id = $id instanceof \Illuminate\Database\Eloquent\Model ? $id->{$id->getKeyName()} : $id;
 
@@ -366,6 +365,7 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
 
         $data = $query->findOrFail($id);
 
+        dd($data);
         // Check permission
         $this->authorize('edit', $data);
 
