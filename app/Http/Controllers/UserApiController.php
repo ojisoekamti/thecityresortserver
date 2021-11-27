@@ -288,7 +288,7 @@ class UserApiController extends Controller
             if (count($ticket) == 0) {
                 $ticket = Ticket::where('tickket_pics.user_id', $uid)
                 ->whereNull('status')
-                ->join('tickkets_pic', 'tickket_pics.ticket_id', '=', 'tickets.id')
+                ->join('tickket_pics', 'tickket_pics.ticket_id', '=', 'tickets.id')
                 ->get();
             }
             return response()->json($ticket);
