@@ -73,6 +73,9 @@ if ($role_id_group == null) {
                                     if ($row->field == 'ticket_belongsto_user_relationship' && $role_id_group != 14) {
                                         continue;
                                     }
+                                    if ($row->field == 'ticket_belongsto_user_relationship_1' && $role_id_group != 14) {
+                                        continue;
+                                    }
                                     
                                     $display_options = $row->details->display ?? null;
                                     if ($dataTypeContent->{$row->field . '_' . ($edit ? 'edit' : 'add')}) {
