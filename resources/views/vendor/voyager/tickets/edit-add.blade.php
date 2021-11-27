@@ -203,7 +203,7 @@ if ($role_id_group == null) {
                                             => $row->details])
                                         @endif
                                     @elseif ($row->type == 'relationship')
-                                        @if ($row->field != 'ticket_belongsto_user_relationship' && $role_id_group == 14)
+                                        @if (($row->field != 'ticket_belongsto_user_relationship' && $role_id_group == 14) || ($row->field != 'ticket_belongsto_user_relationship_1' && $role_id_group == 14))
                                             <div hidden>
                                                 @include('voyager::formfields.relationship', ['options' => $row->details])
                                             </div>
