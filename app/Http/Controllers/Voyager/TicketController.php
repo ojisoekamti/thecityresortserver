@@ -365,7 +365,7 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
 
         $data = $query->findOrFail($id);
 
-        dd($data);
+        //dd($data);
         // Check permission
         $this->authorize('edit', $data);
 
