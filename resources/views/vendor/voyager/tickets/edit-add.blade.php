@@ -94,7 +94,7 @@ if ($role_id_group == null) {
                                     control-label" for="name">{{ $row->getTranslatedAttribute('display_name') }}</label>
 
                                     @include('voyager::multilingual.input-hidden-bread-edit-add')
-                                    @if (($row->field != 'ticket_belongsto_user_relationship' && $role_id_group == 14)||($row->field != 'ticket_belongsto_user_relationship_1' && $role_id_group == 14))
+                                    @if (($row->field != 'ticket_belongsto_user_relationship' && $role_id_group == 14) || ($row->field != 'ticket_belongsto_user_relationship_1' && $role_id_group == 14))
 
                                         @if (isset($row->details->view))
                                             @include($row->details->view, ['row' => $row, 'dataType' => $dataType,
@@ -185,7 +185,7 @@ if ($role_id_group == null) {
                                         @endif
                                     @endif
                                     @if (isset($row->details->view))
-                                        @if ($row->field != 'ticket_belongsto_user_relationship' && $role_id_group == 14)
+                                        @if (($row->field != 'ticket_belongsto_user_relationship' && $role_id_group == 14) || ($row->field != 'ticket_belongsto_user_relationship_1' && $role_id_group == 14))
                                             <div hidden>
                                                 @include($row->details->view, ['row' => $row, 'dataType' => $dataType,
                                                 'dataTypeContent' => $dataTypeContent, 'content' =>
