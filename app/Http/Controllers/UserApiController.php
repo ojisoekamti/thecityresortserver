@@ -120,6 +120,7 @@ class UserApiController extends Controller
         $tukarShift = array();
         if ($uid != "") {
             $tukarShift = SwitchPermission::where("pemohon", $uid)
+                ->where('switch_permission', '!=', 4)
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->where('date', '>=', date("Y-m-d"))
@@ -135,6 +136,7 @@ class UserApiController extends Controller
                 // $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
             } else {
                 $tukarShift = SwitchPermission::where("delegate", $uid)
+                    ->where('switch_permission', '!=', 4)
                     ->where(function ($query) {
                         $query->where(function ($q) {
                             $q->where('date', '>=', date("Y-m-d"))
