@@ -70,6 +70,7 @@ class UserApiController extends Controller
             DB::table('switch_permissions')->insert([
                 'pemohon' => $request->user_id,
                 'date' => $curTime->format("Y-m-d H:i:s"),
+                'date_to' => $curTimeTo->format("Y-m-d H:i:s"),
                 'description' => $request->description,
                 'delegate' => $delegate,
                 'shift_sched' => $request->shift,
@@ -137,11 +138,10 @@ class UserApiController extends Controller
             $tukarShift->next_approver = (count($next_approver) > 0) ? $next_approver[0]->name : "";
 
             //dd($tukarShift);
-            if($tukarShift){
+            if ($tukarShift) {
                 return response()->json($tukarShift);
             }
             return [];
-            
         }
         return [];
     }
