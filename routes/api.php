@@ -31,6 +31,7 @@ Route::get('tickets', function () {
         $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
         $ticket[$key]->unit_name = (count($unitData) > 0) ? $unitData[0]->unit_number : "";
         $ticket[$key]->created_by = ($ticket[$key]->created_by) ? $ticket[$key]->created_by : "Customer Service";
+        $ticket[$key]->created_at = date_format($ticket[$key]->created_at, "d-m-Y H:i:s");
     }
 
     //dd($ticket);
@@ -47,6 +48,7 @@ Route::get('tickets-proccess', function () {
         $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
         $ticket[$key]->unit_name = (count($unitData) > 0) ? $unitData[0]->unit_number : "";
         $ticket[$key]->created_by = ($ticket[$key]->created_by) ? $ticket[$key]->created_by : "Customer Service";
+        $ticket[$key]->created_at = date_format($ticket[$key]->created_at, "d-m-Y H:i:s");
     }
     //dd($ticket);
     return $ticket;
@@ -62,6 +64,7 @@ Route::get('tickets-success', function () {
         $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
         $ticket[$key]->unit_name = (count($unitData) > 0) ? $unitData[0]->unit_number : "";
         $ticket[$key]->created_by = ($ticket[$key]->created_by) ? $ticket[$key]->created_by : "Customer Service";
+        $ticket[$key]->created_at = date_format($ticket[$key]->created_at, "d-m-Y H:i:s");
     }
     //dd($ticket);
     return $ticket;
