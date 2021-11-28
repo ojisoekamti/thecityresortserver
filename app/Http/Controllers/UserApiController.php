@@ -56,7 +56,7 @@ class UserApiController extends Controller
         if (count($delegate) > 0) {
             $delegate = $delegate[0]->id;
         }
-        if ($id != "") {
+        if ($id) {
             DB::table('switch_permissions')
                 ->where('id', $id)
                 ->update([
