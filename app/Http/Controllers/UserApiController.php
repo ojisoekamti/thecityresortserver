@@ -60,7 +60,7 @@ class UserApiController extends Controller
             DB::table('switch_permissions')
                 ->where('id', $id)
                 ->update([
-                    'date_to' => $curTime->format("Y-m-d H:i:s")
+                    'date_to' => $curTimeTo->format("Y-m-d H:i:s")
                 ]);
         } else {
 
