@@ -51,9 +51,7 @@ class UserApiController extends Controller
         $curTime = new \DateTime($request->date);
         $curTimeTo = new \DateTime($request->dateTo);
         $delegate = (string)$request->delegate;
-        $status = $request->status;
         $id = $request->id;
-        $approval_flow = $request->approval_flow;
         $delegate = DB::select("SELECT * from users where users.name LIKE '%$delegate%'");
         if (count($delegate) > 0) {
             $delegate = $delegate[0]->id;
@@ -62,8 +60,7 @@ class UserApiController extends Controller
             DB::table('switch_permissions')
                 ->where('id', $id)
                 ->update([
-                    'next_approver' => $request->id_pemohon,
-                    'date_to' => $curTime->format("Y-m-d H:i:s"), 'status' => 1
+                    'date_to' => $curTime->format("Y-m-d H:i:s")
                 ]);
         } else {
 
