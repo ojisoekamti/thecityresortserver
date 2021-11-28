@@ -120,7 +120,6 @@ class UserApiController extends Controller
         $tukarShift = array();
         if ($uid != "") {
             $tukarShift = collect(DB::select("SELECT * FROM switch_permissions WHERE pemohon = $uid AND switch_permissions.`status` != 4 AND (switch_permissions.`date` >= '2021-11-28' OR ( switch_permissions.`date_to` >= '2021-11-28' OR switch_permissions.date_to IS NULL ) )"))->first();
-            
             if ($tukarShift) {
                 // $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
             } else {
@@ -136,7 +135,13 @@ class UserApiController extends Controller
             $tukarShift->delegate = (count($delegate) > 0) ? $delegate[0]->name : "";
             $next_approver = User::select('name')->where('id', $tukarShift->next_approver)->get();
             $tukarShift->next_approver = (count($next_approver) > 0) ? $next_approver[0]->name : "";
-            return response()->json(json_decode($tukarShift));
+
+            //dd($tukarShift);
+            if($tukarShift){
+                return response()->json($tukarShift);
+            }
+            return [];
+            
         }
         return [];
     }
