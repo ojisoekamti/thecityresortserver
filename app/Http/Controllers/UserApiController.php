@@ -120,7 +120,7 @@ class UserApiController extends Controller
         $tukarShift = array();
         if ($uid != "") {
             $tukarShift = SwitchPermission::where("pemohon", $uid)
-                ->where('switch_permission.`status`', '!=', 4)
+                ->where('switch_permissions.`status`', '!=', 4)
                 ->where(function ($query) {
                     $query->where('date', '>=', date("Y-m-d"));
                     $query->orWhere(function ($q) {
