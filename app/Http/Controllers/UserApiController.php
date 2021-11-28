@@ -120,8 +120,6 @@ class UserApiController extends Controller
         $tukarShift = array();
         if ($uid != "") {
             $tukarShift = SwitchPermission::where("pemohon", $uid)
-                ->where("switch_permissions.status", '!=', '3')
-                ->where("switch_permissions.status", '!=', '4')
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->where('date', '>=', date("Y-m-d"))
@@ -137,15 +135,15 @@ class UserApiController extends Controller
                 // $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
             } else {
                 $tukarShift = SwitchPermission::where("delegate", $uid)
-                    ->where("switch_permissions.status", '!=', '3')
-                    ->where("switch_permissions.status", '!=', '4')
-                    ->where(function ($q) {
-                        $q->where('date', '>=', date("Y-m-d"))
-                            ->orWhereNull('date');
-                    })
-                    ->where(function ($q) {
-                        $q->where('date_to', '>=', date("Y-m-d"))
-                            ->orWhereNull('date_to');
+                    ->where(function ($query) {
+                        $query->where(function ($q) {
+                            $q->where('date', '>=', date("Y-m-d"))
+                                ->orWhereNull('date');
+                        });
+                        $query->orWhere(function ($q) {
+                            $q->where('date_to', '>=', date("Y-m-d"))
+                                ->orWhereNull('date_to');
+                        });
                     })
                     ->first();
                 if ($tukarShift) {
