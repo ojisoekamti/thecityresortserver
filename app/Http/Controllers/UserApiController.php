@@ -119,11 +119,12 @@ class UserApiController extends Controller
         $uid = $request->uid;
         $tukarShift = array();
         if ($uid != "") {
-            $tukarShift = collect(DB::select("SELECT * FROM switch_permissions WHERE pemohon = $uid AND switch_permissions.`status` != 4 AND (switch_permissions.`date` >= '2021-11-28' AND ( switch_permissions.`date_to` >= '2021-11-28' OR switch_permissions.date_to IS NULL ) )"))->first();
+            $tukarShift = collect(DB::select("SELECT * FROM switch_permissions WHERE pemohon = $uid AND switch_permissions.`status` != 4 AND (switch_permissions.`date` >= '2021-11-28' OR ( switch_permissions.`date_to` >= '2021-11-28' OR switch_permissions.date_to IS NULL ) )"))->first();
+            
             if ($tukarShift) {
                 // $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
             } else {
-                $tukarShift = collect(DB::select("SELECT * FROM switch_permissions WHERE delegate = $uid AND switch_permissions.`status` != 4 AND (switch_permissions.`date` >= '2021-11-28' AND ( switch_permissions.`date_to` >= '2021-11-28' OR switch_permissions.date_to IS NULL ) )"))->first();
+                $tukarShift = collect(DB::select("SELECT * FROM switch_permissions WHERE delegate = $uid AND switch_permissions.`status` != 4 AND (switch_permissions.`date` >= '2021-11-28' OR ( switch_permissions.`date_to` >= '2021-11-28' OR switch_permissions.date_to IS NULL ) )"))->first();
                 if ($tukarShift) {
                 } else {
                     return [];
