@@ -122,10 +122,10 @@ class UserApiController extends Controller
             $tukarShift = SwitchPermission::where("pemohon", $uid)
                 ->where('switch_permissions.`status`', '!=', 4)
                 ->where(function ($query) {
-                    $query->where('date', '>=', date("Y-m-d"));
+                    $query->where('switch_permissions.`date`', '>=', date("Y-m-d"));
                     $query->orWhere(function ($q) {
-                        $q->where('date_to', '>=', date("Y-m-d"))
-                            ->orWhereNull('date_to');
+                        $q->where('switch_permissions.`date_to`', '>=', date("Y-m-d"))
+                            ->orWhereNull('switch_permissions.`date_to`');
                     });
                 })
                 ->first();
@@ -135,10 +135,10 @@ class UserApiController extends Controller
                 $tukarShift = SwitchPermission::where("delegate", $uid)
                     ->where('switch_permissions.`status`', '!=', 4)
                     ->where(function ($query) {
-                        $query->where('date', '>=', date("Y-m-d"));
+                        $query->where('switch_permissions.`date`', '>=', date("Y-m-d"));
                         $query->orWhere(function ($q) {
-                            $q->where('date_to', '>=', date("Y-m-d"))
-                                ->orWhereNull('date_to');
+                            $q->where('switch_permissions.`date_to`', '>=', date("Y-m-d"))
+                                ->orWhereNull('switch_permissions.`date_to`');
                         });
                     })
                     ->first();
