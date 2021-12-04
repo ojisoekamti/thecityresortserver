@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\UserApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -84,4 +85,5 @@ Route::get("user-role", [UserApiController::class, 'userRole']);
 Route::get("user-delegate", [UserApiController::class, 'userTicketDelegate']);
 Route::get("user-role-additional", [UserApiController::class, 'userGroupSec']);
 Route::get("user-tickets", [UserApiController::class, 'getTickets']);
+Route::get("send-email", [EmailController::class, 'index']);
 Route::get("user/{email}", "UserApiController@userDetail");
