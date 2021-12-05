@@ -10,7 +10,7 @@ class EmailController extends Controller
 {
     public function index(Request $request)
     {
-        Mail::to('admin@thecityresort.com')->send(new SendEmail);
-        //return [];
+        Mail::to('abdulghoji31@gmail.com')->send(new SendEmail);
+        return [];
     }
 }
