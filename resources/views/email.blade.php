@@ -1,3 +1,3 @@
 <div>
-    Kamu mendapatkan request tukar shift 
+    Kamu mendapatkan Approval Permohonan tukar shift 
 </div>
