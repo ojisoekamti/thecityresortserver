@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use TCG\Voyager\Models\Role;
 use App\Models\File;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail;
 
 class UserApiController extends Controller
 {
@@ -62,6 +64,8 @@ class UserApiController extends Controller
                 ->update([
                     'date_to' => $curTimeTo->format("Y-m-d H:i:s")
                 ]);
+            $request->update = true;
+            Mail::to($delegate->email)->send(new SendEmail($request));
         } else {
 
             DB::table('switch_permissions')->insert([
@@ -74,6 +78,9 @@ class UserApiController extends Controller
                 'next_approver' => $delegate,
                 'status' => 1
             ]);
+
+            $request->update = false;
+            Mail::to($delegate->email)->send(new SendEmail($request));
         }
         return response()->json(json_decode($request));
     }
