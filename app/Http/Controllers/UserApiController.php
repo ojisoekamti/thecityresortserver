@@ -427,7 +427,7 @@ class UserApiController extends Controller
         $approve = $request->approve;
         $status = false;
         $tukarShift = SwitchPermission::where("id", $id)->first();
-        $user_role = DB::select("SELECT `t1`.`id` AS `id`, `t1`.`role_id` AS `role_id`, `t2`.`id` AS lev2, `t3`.`id` AS lev3 FROM((( `users` `t1` LEFT JOIN `users` `t2` ON (( `t2`.`id` = `t1`.`supervisor`))) LEFT JOIN `users` `t3` ON (( `t3`.`id` = `t2`.`supervisor` )))) WHERE `t2`.`name` IS NOT NULL AND t1.id = $tukarShift->pemohon GROUP BY `t1`.`id`, `t1`.`role_id`, `t1`.`name`,`t2`.`id`,`t3`.`id` limit 1");
+        $user_role = DB::select("SELECT `t1`.`id` AS `id`, `t1`.`role_id` AS `role_id`, `t2`.`id` AS lev2, `t3`.`id` AS lev3 FROM((( `users` `t1` LEFT JOIN `users` `t2` ON (( `t2`.`id` = `t1`.`supervisor`))) LEFT JOIN `users` `t3` ON (( `t3`.`id` = `t2`.`supervisor` )))) WHERE  t1.id = $tukarShift->pemohon GROUP BY `t1`.`id`, `t1`.`role_id`, `t1`.`name`,`t2`.`id`,`t3`.`id` limit 1");
         $user_role_delegate = DB::select("SELECT `t1`.`id` AS `id`, `t1`.`role_id` AS `role_id`, `t2`.`id` AS lev2, `t3`.`id` AS lev3 FROM((( `users` `t1` LEFT JOIN `users` `t2` ON (( `t2`.`id` = `t1`.`supervisor`))) LEFT JOIN `users` `t3` ON (( `t3`.`id` = `t2`.`supervisor` )))) WHERE `t2`.`name` IS NOT NULL AND t1.id = $tukarShift->delegate GROUP BY `t1`.`id`, `t1`.`role_id`, `t1`.`name`,`t2`.`id`,`t3`.`id` limit 1");
         $lev = $user_role[0]->lev2;
         $lev2 = $user_role_delegate[0]->lev2;
