@@ -9,21 +9,25 @@
 </head>
 
 <body>
+
+    @php
+    $image_str = str_replace('\\', '/', setting('admin.logo_security'));
+    $image_str_crr = str_replace('\\', '/', setting('admin.logo_crr'));
+    @endphp
     <table style="width:100%">
         <tr>
-            <td style="text-align: left;width:20%"><img src="{{ url('') }}/{{ setting('admin.logo_security') }}"
-                    style="width: 70px" alt=""></td>
+            <td style="text-align: left;width:20%"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('storage/' . $image_str))) }}" style="width: 70px" alt=""></td>
             <td style="text-align: center;width:80%">SECURITY THE CITY RESORT RESIDENCE<br><u>BERITA ACARA PENERTIBAN
                     BARANG </u><br>No.
                 {{ $id }}/BAK/SEC-CR/{{ date('M', strtotime($date_time)) }}/{{ date('Y', strtotime($date_time)) }}
             </td>
-            <td style="text-align: right;width:20%"><img src="{{ url('') }}/{{ setting('admin.logo_crr') }}"
-                    style="width: 130px" alt=""></td>
+            <td style="text-align: right;width:20%"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('storage/' . $image_str_crr))) }}" style="width: 130px" alt=""></td>
         </tr>
     </table>
     <p>Pada hari {{ hari_ini($date_time) }}, Tanggal {{ date('d', strtotime($date_time)) }} Bulan
         {{ date('F', strtotime($date_time)) }} Tahun {{ date('Y', strtotime($date_time)) }} <br> Pukul
-        {{ date('h:i:sa', strtotime($date_time)) }} WIB</p>
+        {{ date('h:i:sa', strtotime($date_time)) }} WIB
+    </p>
     <p>Bertempat di : {{ $bertempat_di }}</p>
     <p>Melaporkan Bahwa : </p>
     <p>{{ str_pad(html_entity_decode(strip_tags($description)), 1500, ' . ') }}</p>
