@@ -87,3 +87,7 @@ Route::get("user-role-additional", [UserApiController::class, 'userGroupSec']);
 Route::get("user-tickets", [UserApiController::class, 'getTickets']);
 Route::get("send-email", [EmailController::class, 'index']);
 Route::get("user/{email}", "UserApiController@userDetail");
+
+
+Route::get("chat-list", [UserApiController::class, 'chatList']);
+Route::post("insert-chat-list", [UserApiController::class, 'insertChatList']);

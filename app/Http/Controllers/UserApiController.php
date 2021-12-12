@@ -206,6 +206,41 @@ class UserApiController extends Controller
         return [];
     }
 
+
+    public function chatList(Request $request)
+    {
+        $uid = $request->uid;
+        dump($uid);
+        if ($uid != "") {
+            $role =  DB::select("SELECT * FROM chat_privates LEFT JOIN users ON id_user = users.id WHERE chat_privates.id IN( SELECT id FROM chat_privates WHERE id_user = $uid) AND id_user != $uid");
+            return response()->json($role);
+        }
+        return [];
+    }
+
+    public function insertChatList(Request $request)
+    {
+        $uid = $request->uid;
+        $uid2 = $request->uid2;
+        $id = $request->id;
+        //dump($uid);
+        if ($uid != "") {
+
+            DB::table('chat_privates')->insert([
+                'id' => $id,
+                'id_user' => $uid,
+            ]);
+
+            DB::table('chat_privates')->insert([
+                'id' => $id,
+                'id_user' => $uid2,
+            ]);
+
+            return response()->json([]);
+        }
+        return [];
+    }
+
     public function approveShiftInfo(Request $request)
     {
         $uid = $request->uid;
