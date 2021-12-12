@@ -15,6 +15,7 @@ use TCG\Voyager\Models\Role;
 use App\Models\File;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
+use App\Models\User as ModelsUser;
 
 class UserApiController extends Controller
 {
@@ -65,7 +66,6 @@ class UserApiController extends Controller
                     'date_to' => $curTimeTo->format("Y-m-d H:i:s")
                 ]);
             $request->update = true;
-            Mail::to($delegate->email)->send(new SendEmail($request));
         } else {
 
             DB::table('switch_permissions')->insert([
@@ -80,7 +80,8 @@ class UserApiController extends Controller
             ]);
 
             $request->update = false;
-            Mail::to($delegate->email)->send(new SendEmail($request));
+            $email = User::where("id", $delegate)->first()->email;
+            app('App\Http\Controllers\EmailController')->index($email);
         }
         return response()->json(json_decode($request));
     }
@@ -217,6 +218,14 @@ class UserApiController extends Controller
         return [];
     }
 
+    public function sendMail(Request $request)
+    {
+        $uid = $request->uid;
+        // app('App\Http\Controllers\EmailController')->index($request);
+
+        return [];
+    }
+
     public function insertChatList(Request $request)
     {
         $uid = $request->uid;
@@ -267,6 +276,9 @@ class UserApiController extends Controller
         DB::table('switch_permissions')
             ->where('id', $id)
             ->update(['name' => $request->name]);
+
+        $email = User::where("id", $id)->first()->email;
+        app('App\Http\Controllers\EmailController')->index($email);
         return response()->json(["Success" => true]);
     }
 
@@ -442,6 +454,9 @@ class UserApiController extends Controller
             DB::table('switch_permissions')
                 ->where('id', $id)
                 ->update(['next_approver' => $next_approver]);
+
+            $email = User::where("id", $next_approver)->first()->email;
+            app('App\Http\Controllers\EmailController')->index($email);
         }
         return response()->json(["Success" => true]);
     }
