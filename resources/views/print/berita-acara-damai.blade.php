@@ -9,21 +9,25 @@
 </head>
 
 <body>
+
+    @php
+    $image_str = str_replace('\\', '/', setting('admin.logo_security'));
+    $image_str_crr = str_replace('\\', '/', setting('admin.logo_crr'));
+    @endphp
     <table style="width:100%">
         <tr>
-            <td style="text-align: left;width:20%"><img src="{{ url('') }}/{{ setting('admin.logo_security') }}"
-                    style="width: 70px" alt=""></td>
+            <td style="text-align: left;width:20%"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('storage/' . $image_str))) }}" style="width: 70px" alt=""></td>
             <td style="text-align: center;width:80%">SECURITY THE CITY RESORT RESIDENCE<br><u>BERITA ACARA PERJANJIAN
                     DAMAI </u><br>No.
                 {{ $id }}/BAPD/SEC-CR/{{ date('M', strtotime($datetime)) }}/{{ date('Y', strtotime($datetime)) }}
             </td>
-            <td style="text-align: right;width:20%"><img src="{{ url('') }}/{{ setting('admin.logo_crr') }}"
-                    style="width: 130px" alt=""></td>
+            <td style="text-align: right;width:20%"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('storage/' . $image_str_crr))) }}" style="width: 130px" alt=""></td>
         </tr>
     </table>
     <p>Pada hari {{ hari_ini($datetime) }}, Tanggal {{ date('d', strtotime($datetime)) }} Bulan
         {{ date('F', strtotime($datetime)) }} Tahun {{ date('Y', strtotime($datetime)) }} <br> Pukul
-        {{ date('h:i:sa', strtotime($datetime)) }} WIB</p>
+        {{ date('h:i:sa', strtotime($datetime)) }} WIB
+    </p>
     <p>Bertempat di : {{ $bertempat_di }}</p>
     <p>Perihal : {{ $perihal }}</p>
 
@@ -93,11 +97,14 @@
         </tr>
         <tr>
             <td><br><br><br><br><br>
-                {{ $nama }}</td>
+                {{ $nama }}
+            </td>
             <td><br><br><br><br><br>
-                {{ $nama_2 }}</td>
+                {{ $nama_2 }}
+            </td>
             <td><br><br><br><br><br>
-                {{ $mengetahui }}</td>
+                {{ $mengetahui }}
+            </td>
         </tr>
     </table>
 
