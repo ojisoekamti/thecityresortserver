@@ -210,7 +210,6 @@ class UserApiController extends Controller
     public function chatList(Request $request)
     {
         $uid = $request->uid;
-        dump($uid);
         if ($uid != "") {
             $role =  DB::select("SELECT * FROM chat_privates LEFT JOIN users ON id_user = users.id WHERE chat_privates.id IN( SELECT id FROM chat_privates WHERE id_user = $uid) AND id_user != $uid");
             return response()->json($role);
