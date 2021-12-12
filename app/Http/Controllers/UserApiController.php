@@ -211,7 +211,7 @@ class UserApiController extends Controller
     {
         $uid = $request->uid;
         if ($uid != "") {
-            $role =  DB::select("SELECT * FROM chat_privates LEFT JOIN users ON id_user = users.id WHERE chat_privates.id IN( SELECT id FROM chat_privates WHERE id_user = $uid) AND id_user != $uid");
+            $role =  DB::select("SELECT *,chat_privates.id as chat_id FROM chat_privates LEFT JOIN users ON id_user = users.id WHERE chat_privates.id IN( SELECT id FROM chat_privates WHERE id_user = $uid) AND id_user != $uid");
             return response()->json($role);
         }
         return [];
