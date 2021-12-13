@@ -134,7 +134,7 @@
                                                     @elseif($row->type == 'image')
                                                         @if ($data->{$row->field} != 'null')
                                                             @if ($row->field == 'realization_image' || $row->field == 'result_image')
-                                                                <img src="{{ storage_path('app/public/files/' . $data->{$row->field}) }}"
+                                                                <img src="{{ url('storage/files') }}/{{ $data->{$row->field} }}"
                                                                     style="width:100px">
 
                                                             @else
