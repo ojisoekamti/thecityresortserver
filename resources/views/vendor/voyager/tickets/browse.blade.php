@@ -136,11 +136,8 @@
                                                             @if ($row->field == 'realization_image' || $row->field == 'result_image')
                                                                 <img src="{{ url('storage/files') }}/{{ $data->{$row->field} }}"
                                                                     style="width:100px">
-
                                                             @else
-
                                                                 <img src="@if (!filter_var($data->{$row->field}, FILTER_VALIDATE_URL)){{ Voyager::image($data->{$row->field}) }}@else{{ $data->{$row->field} }}@endif" style="width:100px">
-
                                                             @endif
                                                         @endif
                                                     @elseif($row->type == 'relationship')
