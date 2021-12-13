@@ -132,7 +132,17 @@
                                                         $data->{$row->field}, 'action' => 'browse', 'view' => 'browse',
                                                         'options' => $row->details])
                                                     @elseif($row->type == 'image')
-                                                        <img src="@if (!filter_var($data->{$row->field}, FILTER_VALIDATE_URL)){{ Voyager::image($data->{$row->field}) }}@else{{ $data->{$row->field} }}@endif" style="width:100px">
+                                                        @if ($data->{$row->field} != 'null')
+                                                            @if ($row->field == 'realization_image' || $row->field == 'result_image')
+                                                                <img src="{{ storage_path('app/public/files/' . $data->{$row->field}) }}"
+                                                                    style="width:100px">
+
+                                                            @else
+
+                                                                <img src="@if (!filter_var($data->{$row->field}, FILTER_VALIDATE_URL)){{ Voyager::image($data->{$row->field}) }}@else{{ $data->{$row->field} }}@endif" style="width:100px">
+
+                                                            @endif
+                                                        @endif
                                                     @elseif($row->type == 'relationship')
                                                         @include('voyager::formfields.relationship', ['view' =>
                                                         'browse','options' => $row->details])
@@ -275,16 +285,14 @@
                                                 </td>
                                             @endforeach
                                             <td class="no-sort no-click bread-actions">
-                                                @if ($data->{'realization'} != null)
-                                                    @php
-                                                        continue;
-                                                    @endphp
-                                                @endif
-                                                @foreach ($actions as $action)
-                                                    @if (!method_exists($action, 'massAction'))
-                                                        @include('voyager::bread.partials.actions', ['action' => $action])
-                                                    @endif
-                                                @endforeach
+                                                <div {{ $data->{'realization'} != null ? 'style=display:none;' : '' }}>
+                                                    @foreach ($actions as $action)
+                                                        @if (!method_exists($action, 'massAction'))
+                                                            @include('voyager::bread.partials.actions', ['action' =>
+                                                            $action])
+                                                        @endif
+                                                    @endforeach
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
