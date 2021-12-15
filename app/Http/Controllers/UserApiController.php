@@ -32,7 +32,7 @@ class UserApiController extends Controller
         $credentials = $this->credentials($request);
         if ($this->guard()->attempt($credentials, $request->has('remember'))) {
             $user = $this->userDetail($request->email);
-            
+
             app('App\Http\Controllers\EmailController')->LoginNotification($request->email);
             return response()->json(["success" => true, "message" => "You have logged in successfully", "data" => $user]);
         }
@@ -411,6 +411,7 @@ class UserApiController extends Controller
         }
         return [];
     }
+
     public function getListApproval(Request $request)
     {
         $uid = $request->uid;
@@ -421,6 +422,7 @@ class UserApiController extends Controller
         $tukarShift = SwitchPermission::where("next_approver", $uid)->get();
         return [];
     }
+
     public function approveTukarShift(Request $request)
     {
 

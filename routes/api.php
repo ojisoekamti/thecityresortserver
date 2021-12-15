@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatApiController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\UserApiController;
 use Illuminate\Http\Request;
@@ -91,4 +92,5 @@ Route::get("user/{email}", "UserApiController@userDetail");
 Route::get("send-email", [UserApiController::class, 'sendMail']);
 
 Route::get("chat-list", [UserApiController::class, 'chatList']);
+Route::get("get-contact", [ChatApiController::class, 'getContact']);
 Route::post("insert-chat-list", [UserApiController::class, 'insertChatList']);
