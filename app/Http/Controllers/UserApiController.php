@@ -235,6 +235,10 @@ class UserApiController extends Controller
         $id = $request->id;
         //dump($uid);
         if ($uid != "") {
+            $cekData = DB::select("SELECT * FROM chat_privates WHERE id IN (SELECT id from chat_privates where id_user = $uid ) and id_user = $uid2");
+            if(count($cekData)>0){
+                return response()->json($cekData);
+            }
 
             DB::table('chat_privates')->insert([
                 'id' => $id,
