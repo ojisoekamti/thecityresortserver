@@ -347,6 +347,18 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
     // POST BR(E)AD
     public function update(Request $request, $id)
     {
+        $dataEdit = $request->all();
+        $pic = $dataEdit['id_pic'];
+        $addPic = $dataEdit['ticket_belongsto_user_relationship_1'];
+        $dataEdit['ticket_belongsto_user_relationship_1'] = [];
+        foreach ($addPic as $key => $value) {
+            # code...
+            if ($pic == $value) {
+                continue;
+            }
+            array_push($dataEdit['ticket_belongsto_user_relationship_1'], $value);
+            dump($value);
+        }
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();

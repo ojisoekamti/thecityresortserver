@@ -69,7 +69,7 @@ if ($role_id_group == null) {
                                 <!-- GET THE DISPLAY OPTIONS -->
                                 @php
                                     // dump($row->field=='ticket_belongsto_user_relationship');
-                                    // dump($row->field);
+                                    
                                     if ($row->field == 'ticket_belongsto_user_relationship' && $role_id_group != 14) {
                                         continue;
                                     }
