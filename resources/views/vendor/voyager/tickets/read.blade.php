@@ -63,7 +63,7 @@
                             @elseif($row->type == "image")
                                 {{-- <img class="img-responsive"
                                     src="{{ filter_var($dataTypeContent->{$row->field}, FILTER_VALIDATE_URL) ? $dataTypeContent->{$row->field} : Voyager::image($dataTypeContent->{$row->field}) }}"> --}}
-                                @if ($dataTypeContent->{$row->field}!=null)
+                                @if ($dataTypeContent->{$row->field}!="null"||$dataTypeContent->{$row->field}!=null")
 
                                     <img class="img-responsive"
                                         src="{{ url('storage/files/' . $dataTypeContent->{$row->field}) }}">
