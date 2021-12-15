@@ -357,8 +357,10 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
                 continue;
             }
             array_push($dataEdit['ticket_belongsto_user_relationship_1'], $value);
-            dump($value);
         }
+        $request->merge([
+            'ticket_belongsto_user_relationship_1' => $dataEdit['ticket_belongsto_user_relationship_1'],
+        ]);
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -382,7 +384,7 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
         $this->authorize('edit', $data);
 
         // Validate fields with ajax
-        $val = $this->validateBread($request->all(), $dataType->editRows, $dataType->name, $id)->validate();
+        $val = $this->validateBread($dataEdit, $dataType->editRows, $dataType->name, $id)->validate();
 
         // Get fields with images to remove before updating and make a copy of $data
         $to_remove = $dataType->editRows->where('type', 'image')
