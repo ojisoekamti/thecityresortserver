@@ -291,8 +291,8 @@
                                                     @endforeach
                                                 </div>
                                                 <div {{ $data->{'realization'} != null ? '' : 'style=display:none;' }}>
-                                                    <a href="http://primeone-app.test/admin/tickets/{{ $data->{'id'} }}"
-                                                        title="View" class="btn btn-sm btn-warning pull-right view">
+                                                    <a href="{{ url('admin/tickets/' . $data->{'id'}) }}" title="View"
+                                                        class="btn btn-sm btn-warning pull-right view">
                                                         <i class="voyager-eye"></i> <span
                                                             class="hidden-xs hidden-sm">View</span>
                                                     </a>
