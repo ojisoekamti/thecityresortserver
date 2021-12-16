@@ -132,7 +132,7 @@
                                                         $data->{$row->field}, 'action' => 'browse', 'view' => 'browse',
                                                         'options' => $row->details])
                                                     @elseif($row->type == 'image')
-                                                        @if ($data->{$row->field} != 'null')
+                                                        @if ($data->{$row->field})
                                                             @if ($row->field == 'realization_image' || $row->field == 'result_image')
                                                                 <img src="{{ url('storage/files') }}/{{ $data->{$row->field} }}"
                                                                     style="width:100px">
