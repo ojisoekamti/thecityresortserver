@@ -121,16 +121,16 @@
                     <p
                         style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:"Calibri",sans-serif;'>
                         &nbsp;</p>
-                    <br><br><br><br><br><br><br>
+                    <br><br><br>
                 </td>
             </tr>
             <tr>
-                <td style="width: 113.15pt;padding: 0cm 5.4pt;vertical-align: top;" colspan="2">
+                <td style="width: 113.15pt;padding: 0cm 5.4pt;vertical-align: top;">
                     <p
                         style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:"Calibri",sans-serif;'>
                         Approved By</p>
                 </td>
-                <td style="width: 14.2pt;padding: 0cm 5.4pt;vertical-align: top;">
+                <td style="width: 14.2pt;padding: 0cm 5.4pt;vertical-align: top;" colspan="2">
                     <p
                         style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:"Calibri",sans-serif;'>
                         {{ $delegate }}
