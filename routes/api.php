@@ -77,6 +77,7 @@ Route::post("tukar-shift", [UserApiController::class, 'tukarShift']);
 Route::post("update-user", [UserApiController::class, 'updateUser']);
 Route::post("update-tickets", [UserApiController::class, 'getUpdateTickets']);
 Route::get("approve-shift-info", [UserApiController::class, 'approveShiftInfo']);
+Route::get("list-shift-info", [UserApiController::class, 'listShiftInfo']);
 Route::post("upload", [UserApiController::class, 'upload']);
 Route::get("get-user-delegate", [UserApiController::class, 'getUserDelegate']);
 Route::post("approve-shift", [UserApiController::class, 'approveShiftInfo']);
