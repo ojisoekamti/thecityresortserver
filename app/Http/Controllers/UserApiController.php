@@ -57,6 +57,7 @@ class UserApiController extends Controller
         $curTimeTo = new \DateTime($request->dateTo);
         $delegate = (string)$request->delegate;
         $id = $request->id;
+        $tukarShift = array();
         $delegate = DB::select("SELECT * from users where users.name LIKE '%$delegate%'");
         if (count($delegate) > 0) {
             $delegate = $delegate[0]->id;
@@ -80,9 +81,29 @@ class UserApiController extends Controller
                 'next_approver' => $delegate,
                 'status' => 1
             ]);
-
-            $request->update = false;
             $email = User::where("id", $delegate)->first()->email;
+            $pemohon = User::select('name')->where('id', $request->user_id)->get();
+            $delegate = User::select('name')->where('id', $delegate)->get();
+            $tukarShift = [
+                'pemohon' => $pemohon,
+                'date' => $curTime->format("Y-m-d H:i:s"),
+                'pemohon' => $curTimeTo->format("Y-m-d H:i:s"),
+                'description' => $request->description,
+                'delegate' => $delegate,
+                'shift_sched' => $request->shift,
+                'next_approver' => $delegate
+            ];
+            $request->update = false;
+
+            $email = User::where("id", $delegate)->first()->email;
+            $data = [
+                'email' => $email,
+                'data' => $tukarShift,
+                'status' => 'Approve',
+                'next_approver' => $delegate,
+                'pemohon' => false,
+                'description' => ''
+            ];
             app('App\Http\Controllers\EmailController')->index($email);
         }
         return response()->json(json_decode($request));

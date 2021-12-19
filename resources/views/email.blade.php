@@ -13,7 +13,7 @@
 
     <div>
         Permintaan Approval Tukar Shift dengan detail di bawah ini :<br>
-        Tukar Shift id : {{ $request['data']->id }}<br>
+        {{-- Tukar Shift id : {{ $request['data']->id }}<br> --}}
 
         Pemohon : {{ $request['data']->pemohon }}<br>
         Pengganti : {{ $request['data']->delegate }}<br>
