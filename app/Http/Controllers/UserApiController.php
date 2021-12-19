@@ -104,7 +104,7 @@ class UserApiController extends Controller
                 'pemohon' => false,
                 'description' => ''
             ];
-            app('App\Http\Controllers\EmailController')->index($email);
+            app('App\Http\Controllers\EmailController')->index($data);
         }
         return response()->json(json_decode($request));
     }
