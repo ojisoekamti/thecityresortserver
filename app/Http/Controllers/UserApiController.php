@@ -127,7 +127,7 @@ class UserApiController extends Controller
         $uid = $request->uid;
         $tukarShift = array();
         if ($uid != "") {
-            $tukarShift = collect(DB::select("SELECT * FROM switch_permissions WHERE pemohon = $uid AND switch_permissions.`status` != 4 AND (switch_permissions.`date` >= '2021-11-28' OR ( switch_permissions.`date_to` >= '2021-11-28' OR switch_permissions.date_to IS NULL ) )"))->first();
+            $tukarShift = collect(DB::select("SELECT *, ( SELECT COUNT(*) AS jumlah FROM switch_permissions WHERE pemohon = $uid  AND ( date_to > NOW()+ 1 OR date > NOW()+ 1 ) 	AND `status` != 4) as Jumlah FROM switch_permissions WHERE pemohon = $uid AND switch_permissions.`status` != 4 AND (switch_permissions.`date` >= '2021-11-28' OR ( switch_permissions.`date_to` >= '2021-11-28' OR switch_permissions.date_to IS NULL ) )"))->first();
             if ($tukarShift) {
                 // $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
             } else {
@@ -236,7 +236,7 @@ class UserApiController extends Controller
         //dump($uid);
         if ($uid != "") {
             $cekData = DB::select("SELECT * FROM chat_privates WHERE id IN (SELECT id from chat_privates where id_user = $uid ) and id_user = $uid2");
-            if(count($cekData)>0){
+            if (count($cekData) > 0) {
                 return response()->json($cekData);
             }
 
