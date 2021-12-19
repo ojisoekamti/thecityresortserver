@@ -95,7 +95,7 @@ class UserApiController extends Controller
             ];
             $request->update = false;
 
-            $email = User::where("id", $delegate)->first()->email;
+            // $email = User::where("id", $delegate)->first()->email;
             $data = [
                 'email' => $email,
                 'data' => $tukarShift,
