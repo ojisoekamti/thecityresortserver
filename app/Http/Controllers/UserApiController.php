@@ -283,7 +283,7 @@ class UserApiController extends Controller
     {
         $uid = $request->uid;
         if ($uid != "") {
-            $tukarShift = SwitchPermission::where("pemohon", $uid)->where("status", 1)->get();
+            $tukarShift = SwitchPermission::where("pemohon", $uid)->orwhere("delegate", $uid)->where("status", 1)->get();
             if ($tukarShift) {
                 foreach ($tukarShift as $row) {
                     # code...
@@ -295,20 +295,7 @@ class UserApiController extends Controller
                     $row->next_approver = (count($next_approver) > 0) ? $next_approver[0]->name : "";
                 }
             } else {
-                $tukarShift = SwitchPermission::where("delegate", $uid)->where("status", 1)->get();
-                if ($tukarShift) {
-                    foreach ($tukarShift as $row) {
-                        # code...
-                        $pemohon = User::select('name')->where('id', $row->pemohon)->get();
-                        $row->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
-                        $delegate = User::select('name')->where('id', $row->delegate)->get();
-                        $row->delegate = (count($delegate) > 0) ? $delegate[0]->name : "";
-                        $next_approver = User::select('name')->where('id', $row->next_approver)->get();
-                        $row->next_approver = (count($next_approver) > 0) ? $next_approver[0]->name : "";
-                    }
-                } else {
-                    return [];
-                }
+                return [];
             }
             return response()->json($tukarShift);
         }
