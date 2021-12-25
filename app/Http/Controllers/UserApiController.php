@@ -31,7 +31,7 @@ class UserApiController extends Controller
         }
         $credentials = $this->credentials($request);
         if ($this->guard()->attempt($credentials, $request->has('remember'))) {
-            $user = $this->userDetail($request->email);
+            $user = $this->userDetail($request->email, $request->token);
 
             app('App\Http\Controllers\EmailController')->LoginNotification($request->email);
             return response()->json(["success" => true, "message" => "You have logged in successfully", "data" => $user]);
@@ -42,10 +42,16 @@ class UserApiController extends Controller
         return response()->json(["success" => false]);
     }
 
-    public function userDetail($email)
+    public function userDetail($email, $token)
     {
         $user = array();
         if ($email != "") {
+
+            DB::table('users')
+                ->where('email', $email)
+                ->update([
+                    'mobile_token' => $token
+                ]);
             $user = User::where("email", $email)->first();
             return $user;
         }
