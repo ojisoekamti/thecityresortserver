@@ -31,7 +31,7 @@ class UserApiController extends Controller
         }
         $credentials = $this->credentials($request);
         if ($this->guard()->attempt($credentials, $request->has('remember'))) {
-            $user = $this->userDetail($request->email, $request->token);
+            $user = $this->userDetail($request->email, $request->tokenId);
 
             app('App\Http\Controllers\EmailController')->LoginNotification($request->email);
             return response()->json(["success" => true, "message" => "You have logged in successfully", "data" => $user]);
