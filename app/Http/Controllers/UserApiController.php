@@ -509,7 +509,7 @@ class UserApiController extends Controller
             $status = 4;
         }
 
-        if ($status > 0) {
+        if ($status == false) {
             DB::table('switch_permissions')
                 ->where('id', $id)
                 ->update(['next_approver' => null, 'status' => $status]);
@@ -540,7 +540,7 @@ class UserApiController extends Controller
                 'description' => $description
             ];
             app('App\Http\Controllers\EmailController')->index($data);
-        } else if ($status == false) {
+        } else if ($status >0 ) {
             DB::table('switch_permissions')
                 ->where('id', $id)
                 ->update(['next_approver' => $next_approver]);
