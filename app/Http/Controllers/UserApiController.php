@@ -509,6 +509,19 @@ class UserApiController extends Controller
             $status = 4;
         }
 
+        $data = [
+            'id' => $id,
+            'uid' => $uid,
+            'approve' => $approve,
+            'description' => $description,
+            'status' => $status,
+            'lev' => $lev,
+            'lev2' => $lev2,
+            'lev3' => $lev3,
+            'next_approver' => $next_approver,
+        ];
+
+        return $data;
         if (!$approve) {
             DB::table('switch_permissions')
                 ->where('id', $id)
@@ -521,8 +534,6 @@ class UserApiController extends Controller
             $tukarShift->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
             $delegate = User::select('name')->where('id', $tukarShift->delegate)->get();
             $tukarShift->delegate = (count($delegate) > 0) ? $delegate[0]->name : "";
-            $next_approver = User::select('name')->where('id', $tukarShift->next_approver)->get();
-            $tukarShift->next_approver = (count($next_approver) > 0) ? $next_approver[0]->name : "";
 
             $data = [
                 'email' => $email,
