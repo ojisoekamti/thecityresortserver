@@ -521,7 +521,6 @@ class UserApiController extends Controller
             'next_approver' => $next_approver,
         ];
 
-        return $data;
         if (!$approve) {
             DB::table('switch_permissions')
                 ->where('id', $id)
