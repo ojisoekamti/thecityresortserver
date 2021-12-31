@@ -42,6 +42,45 @@ class UserApiController extends Controller
         return response()->json(["success" => false]);
     }
 
+
+    function sendPushNotification($fcm_token, $title, $message, $id = null, $action = null)
+    {
+
+        $url = "https://fcm.googleapis.com/fcm/send";
+        $header = [
+            'authorization: key=AAAAeAHYOt0:APA91bGTR10gYX3lPIdUOXTLQLKCwhUGRyIQvjBRXkCLGvUsyQa_gTRavm76_vgJDAnnfFOMc9CzyXzD3nhzzWb1YXM5Eu_4UYMPjrCtqDlCPr5hw24mKYJjnQaPiCiImmBRteljHrNK',
+            'content-type: application/json'
+        ];
+
+        $notification = [
+            'title' => $title,
+            'body' => $message
+        ];
+        $extraNotificationData = ["message" => $notification, "id" => $id, 'action' => $action];
+
+        $fcmNotification = [
+            'to'        => $fcm_token,
+            'notification' => $notification,
+            'data' => $extraNotificationData
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fcmNotification));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return $result;
+    }
+
+
+
+
     public function userDetail($email, $token)
     {
         $user = array();
@@ -488,7 +527,8 @@ class UserApiController extends Controller
         $approve = $request->approve;
         $description = $request->description;
         $status = false;
-        $tukarShift = SwitchPermission::where("id", $id)->first();
+        // $tukarShift = SwitchPermission::where("id", $id)->first();
+        $tukarShift = collect(DB::select("SELECT pemohonjoin.`name` as nama_pemohon, delegatejoin.`name` as nama_delegate, nextjoin.`name` as nama_next, switch_permissions.* FROM switch_permissions LEFT JOIN users AS pemohonjoin ON switch_permissions.pemohon = pemohonjoin.id LEFT JOIN users AS delegatejoin ON switch_permissions.delegate = delegatejoin.id LEFT JOIN users AS nextjoin ON switch_permissions.next_approver = nextjoin.id WHERE switch_permissions.id = $id"))->first();
         $user_role = DB::select("SELECT `t1`.`id` AS `id`, `t1`.`role_id` AS `role_id`, `t2`.`id` AS lev2, `t3`.`id` AS lev3 FROM((( `users` `t1` LEFT JOIN `users` `t2` ON (( `t2`.`id` = `t1`.`supervisor`))) LEFT JOIN `users` `t3` ON (( `t3`.`id` = `t2`.`supervisor` )))) WHERE  t1.id = $tukarShift->pemohon GROUP BY `t1`.`id`, `t1`.`role_id`, `t1`.`name`,`t2`.`id`,`t3`.`id` limit 1");
         $user_role_delegate = DB::select("SELECT `t1`.`id` AS `id`, `t1`.`role_id` AS `role_id`, `t2`.`id` AS lev2, `t3`.`id` AS lev3 FROM((( `users` `t1` LEFT JOIN `users` `t2` ON (( `t2`.`id` = `t1`.`supervisor`))) LEFT JOIN `users` `t3` ON (( `t3`.`id` = `t2`.`supervisor` )))) WHERE `t2`.`name` IS NOT NULL AND t1.id = $tukarShift->delegate GROUP BY `t1`.`id`, `t1`.`role_id`, `t1`.`name`,`t2`.`id`,`t3`.`id` limit 1");
         $lev = $user_role[0]->lev2;
@@ -502,13 +542,18 @@ class UserApiController extends Controller
         } else if ($uid == 13) {
             $next_approver = $lev3;
         }
-        if ($uid == $lev3) {
-            $status = 3;
+        if ($uid == 6) {
+            $next_approver = null;
         }
         if ($approve == "false") {
             $status = 4;
+        } else if ($approve == "true") {
+            if ($next_approver == null) {
+                $status = 3;
+            } else {
+                $status = 2;
+            }
         }
-
         $data = [
             'id' => $id,
             'uid' => $uid,
@@ -519,9 +564,11 @@ class UserApiController extends Controller
             'lev2' => $lev2,
             'lev3' => $lev3,
             'next_approver' => $next_approver,
+            'tukarShift' => $tukarShift,
+            'pemohon' => $tukarShift->pemohon,
+            'delegate' => $tukarShift->delegate
         ];
-
-        if (!$approve) {
+        if ($approve == "false") {
             DB::table('switch_permissions')
                 ->where('id', $id)
                 ->update(['next_approver' => null, 'status' => $status]);
@@ -529,78 +576,95 @@ class UserApiController extends Controller
             $email = User::where("id", $tukarShift->pemohon)->first()->email;
             $email_delegate = User::where("id", $tukarShift->delegate)->first()->email;
 
-            $pemohon = User::select('name')->where('id', $tukarShift->pemohon)->get();
-            $tukarShift->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
-            $delegate = User::select('name')->where('id', $tukarShift->delegate)->get();
-            $tukarShift->delegate = (count($delegate) > 0) ? $delegate[0]->name : "";
-
-            $data = [
+            $send = [
                 'email' => $email,
                 'data' => $tukarShift,
                 'status' => 'Reject',
                 'pemohon' => true,
                 'description' => $description
             ];
-            app('App\Http\Controllers\EmailController')->index($data);
-            $data = [
+            app('App\Http\Controllers\EmailController')->index($send);
+            $send = [
                 'email' => $email_delegate,
                 'data' => $tukarShift,
                 'status' => 'Reject',
                 'pemohon' => true,
                 'description' => $description
             ];
-            app('App\Http\Controllers\EmailController')->index($data);
+            app('App\Http\Controllers\EmailController')->index($send);
         } else if ($approve) {
+
+            DB::table('approve_histories')->insert([
+                'id_record' => $id,
+                'id_users' => $uid,
+                'approve' => $approve,
+                'created_at' => now(),
+                'description' => $description,
+                'record_type' => "switch_permission"
+            ]);
+
+            $approve_history = DB::select("SELECT * from approve_histories where id_record = $id");
             DB::table('switch_permissions')
                 ->where('id', $id)
-                ->update(['next_approver' => $next_approver]);
+                ->update(['next_approver' => $next_approver, 'status' => $status]);
 
-            $email = User::where("id", $tukarShift->pemohon)->first()->email;
-            $email_delegate = User::where("id", $tukarShift->delegate)->first()->email;
+            if ($next_approver != null) {
+                $mobile_token = User::where("id", $next_approver)->first()->mobile_token;
+                $title = "Notification";
+                $message = "Permohonan Approval Tukar Shift ";
+                $responsefcm = $this->sendPushNotification($mobile_token, $title, $message);
+            }
 
-            $pemohon = User::select('name')->where('id', $tukarShift->pemohon)->get();
-            $tukarShift->pemohon = (count($pemohon) > 0) ? $pemohon[0]->name : "";
-            $delegate = User::select('name')->where('id', $tukarShift->delegate)->get();
-            $tukarShift->delegate = (count($delegate) > 0) ? $delegate[0]->name : "";
-            $next = User::select('name')->where('id', $tukarShift->next_approver)->get();
-            $tukarShift->next_approver = (count($next) > 0) ? $next[0]->name : "";
+            $data_save = 3;
+            $email = "";
+            $data['approve_history'] = $approve_history;
+            for ($i = 0; $i < $data_save; $i++) {
+                if ($i == 0) {
 
-            $data = [
-                'email' => $email,
-                'data' => $tukarShift,
-                'status' => 'Approve',
-                'next_approver' => $next_approver,
-                'pemohon' => true,
-                'description' => $description
-            ];
+                    $email = User::where("id", $data['pemohon'])->first()->email;
+                    $send = [
+                        'email' => $email,
+                        'data' => $tukarShift,
+                        'status' => 'Approve',
+                        'next_approver' => $next_approver,
+                        'pemohon' => true,
+                        'description' => $description,
+                        'approve_history' => $approve_history
+                    ];
+                } else if ($i == 1) {
 
-            app('App\Http\Controllers\EmailController')->index($data);
-
-
-            $data = [
-                'email' => $email_delegate,
-                'data' => $tukarShift,
-                'status' => 'Approve',
-                'next_approver' => $next_approver,
-                'pemohon' => true,
-                'description' => $description
-            ];
-
-            app('App\Http\Controllers\EmailController')->index($data);
-
-
-            $email = User::where("id", $next_approver)->first()->email;
-
-            $data = [
-                'email' => $email,
-                'data' => $tukarShift,
-                'status' => 'Approve',
-                'next_approver' => $next_approver,
-                'pemohon' => false,
-                'description' => $description
-            ];
-            app('App\Http\Controllers\EmailController')->index($data);
+                    $email = User::where("id", $data['delegate'])->first()->email;
+                    $send = [
+                        'email' => $email,
+                        'data' => $tukarShift,
+                        'status' => 'Approve',
+                        'next_approver' => $next_approver,
+                        'pemohon' => true,
+                        'description' => $description,
+                        'approve_history' => $approve_history
+                    ];
+                } else if ($i == 2) {
+                    if ($data['next_approver']) {
+                        $email = User::where("id", $data['next_approver'])->first()->email;
+                        $send = [
+                            'email' => $email,
+                            'data' => $tukarShift,
+                            'status' => 'Approve',
+                            'next_approver' => $next_approver,
+                            'pemohon' => false,
+                            'description' => $description,
+                            'approve_history' => $approve_history
+                        ];
+                    }
+                }
+                if ($status == 3) {
+                    if ($i == 2) {
+                        continue;
+                    }
+                }
+                app('App\Http\Controllers\EmailController')->index($send);
+            }
         }
-        return response()->json(["Success" => true]);
+        return response()->json(["Success" => true, "data" => $data]);
     }
 }
