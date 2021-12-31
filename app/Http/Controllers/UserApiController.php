@@ -551,7 +551,7 @@ class UserApiController extends Controller
             if ($next_approver == null) {
                 $status = 3;
             } else {
-                $status = 2;
+                $status = 1;
             }
         }
         $data = [
