@@ -197,8 +197,8 @@ class UserApiController extends Controller
             if ($tukarShift) {
                 // $unitData = Unit::select('unit_number')->where('id', $value->id_unit)->get();
             } else {
-                //return [];
-                $tukarShift = collect(DB::select("SELECT *, ( SELECT COUNT(*) AS jumlah FROM switch_permissions WHERE delegate = $uid  AND ( date_to > NOW()+ 1 OR date > NOW()+ 1 ) 	AND `status` != 4) as Jumlah FROM switch_permissions WHERE delegate = $uid AND switch_permissions.`status` != 4 AND (switch_permissions.`date` >= '2021-11-28' OR ( switch_permissions.`date_to` >= '2021-11-28' OR switch_permissions.date_to IS NULL ) )"))->first();
+                return [];
+                //$tukarShift = collect(DB::select("SELECT *, ( SELECT COUNT(*) AS jumlah FROM switch_permissions WHERE delegate = $uid  AND ( date_to > NOW()+ 1 OR date > NOW()+ 1 ) 	AND `status` != 4) as Jumlah FROM switch_permissions WHERE delegate = $uid AND switch_permissions.`status` != 4 AND (switch_permissions.`date` >= '2021-11-28' OR ( switch_permissions.`date_to` >= '2021-11-28' OR switch_permissions.date_to IS NULL ) )"))->first();
                 if ($tukarShift) {
                 } else {
                     return [];
@@ -349,7 +349,7 @@ class UserApiController extends Controller
     {
         $uid = $request->uid;
         if ($uid != "") {
-            $tukarShift = SwitchPermission::where("pemohon", $uid)->orwhere("delegate", $uid)->where("status", 1)->get();
+            $tukarShift = SwitchPermission::where("pemohon", $uid)->orwhere("delegate", $uid)->where("status != 4")->get();
             if ($tukarShift) {
                 foreach ($tukarShift as $row) {
                     # code...
