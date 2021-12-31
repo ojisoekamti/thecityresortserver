@@ -127,8 +127,8 @@ class UserApiController extends Controller
                 'status' => 1
             ]);
             $email = User::where("id", $delegate)->first()->email;
-            $pemohon = User::select('name')->where('id', $request->user_id)->get();
-            $delegate = User::select('name')->where('id', $delegate)->get();
+            $pemohon = User::where('id', $request->user_id)->first()->name;
+            $delegate = User::where('id', $delegate)->first()->name;
             $tukarShift = [
                 'pemohon' => $pemohon,
                 'date' => $curTime->format("Y-m-d H:i:s"),
