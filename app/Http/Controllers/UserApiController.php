@@ -290,7 +290,7 @@ class UserApiController extends Controller
     public function sendMail(Request $request)
     {
         $uid = $request->uid;
-        // app('App\Http\Controllers\EmailController')->index($request);
+        app('App\Http\Controllers\EmailController')->LoginNotification('abdulghoji31@gmail.com');
 
         return [];
     }
