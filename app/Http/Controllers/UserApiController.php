@@ -147,7 +147,8 @@ class UserApiController extends Controller
                 'status' => 'Approve',
                 'next_approver' => $delegate,
                 'pemohon' => false,
-                'description' => ''
+                'description' => '',
+                'nama_pemohon' => $pemohon,
             ];
             app('App\Http\Controllers\EmailController')->index($data);
         }
