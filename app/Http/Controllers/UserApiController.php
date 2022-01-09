@@ -142,15 +142,15 @@ class UserApiController extends Controller
             $request->update = false;
 
             // $email = User::where("id", $delegate)->first()->email;
-            $data = [
+            $send = [
                 'email' => $email,
-                'data' => $tukarShift[0],
+                'data' => $tukarShift,
                 'status' => 'Approve',
                 'next_approver' => $delegate,
                 'pemohon' => false,
                 'description' => ''
             ];
-            app('App\Http\Controllers\EmailController')->index($data);
+            app('App\Http\Controllers\EmailController')->index($send);
         }
         return response()->json(json_decode($request));
     }
