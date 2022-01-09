@@ -131,6 +131,7 @@ class UserApiController extends Controller
             $delegate = User::where('id', $delegate)->first()->name;
             $tukarShift = [
                 'nama_pemohon' => $pemohon,
+                'nama_delegate' => $delegate,
                 'date' => $curTime->format("Y-m-d H:i:s"),
                 'pemohon' => $curTimeTo->format("Y-m-d H:i:s"),
                 'description' => $request->description,
@@ -143,12 +144,11 @@ class UserApiController extends Controller
             // $email = User::where("id", $delegate)->first()->email;
             $data = [
                 'email' => $email,
-                'data' => $tukarShift,
+                'data' => $tukarShift[0],
                 'status' => 'Approve',
                 'next_approver' => $delegate,
                 'pemohon' => false,
-                'description' => '',
-                'nama_pemohon' => $pemohon,
+                'description' => ''
             ];
             app('App\Http\Controllers\EmailController')->index($data);
         }
