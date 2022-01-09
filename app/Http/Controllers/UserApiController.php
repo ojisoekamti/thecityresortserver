@@ -130,7 +130,7 @@ class UserApiController extends Controller
             $pemohon = User::where('id', $request->user_id)->first()->name;
             $delegate = User::where('id', $delegate)->first()->name;
             $tukarShift = [
-                'pemohon' => $pemohon,
+                'nama_pemohon' => $pemohon,
                 'date' => $curTime->format("Y-m-d H:i:s"),
                 'pemohon' => $curTimeTo->format("Y-m-d H:i:s"),
                 'description' => $request->description,
