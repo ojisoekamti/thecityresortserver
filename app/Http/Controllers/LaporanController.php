@@ -7,6 +7,7 @@ use App\BeritaAcaraKejadian;
 use App\BeritaAcaraPenertibanBarang;
 use App\Models\User;
 use App\SwitchPermission;
+use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
 {
@@ -115,4 +116,14 @@ class LaporanController extends Controller
         // return view('pdf', $results);
         return $pdf->stream('berita-acara.pdf');
     }
+	
+	public function csoSched($id){
+		$data = DB::select("SELECT cso_schedules.description as description, towers.name as tower_name, users.name as name, time, end, avatar FROM `cso_schedules` LEFT JOIN users ON users.id = cso_schedules.employee_id LEFT JOIN towers ON towers.id = cso_schedules.tower_id;
+");
+		$employee_data = DB::select("SELECT cso_schedules.employee_id,users.name, users.avatar FROM `cso_schedules` LEFT JOIN users ON users.id = cso_schedules.employee_id GROUP BY employee_id,users.name,users.avatar;");
+		$desc_data = DB::select("SELECT * FROM `cso_schedules` ORDER BY time");
+        return view('cso-sched')->with(compact('employee_data','desc_data'));
+	}
+
+
 }

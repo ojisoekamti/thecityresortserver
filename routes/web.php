@@ -32,5 +32,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/berita-acara-damai/{id}',[LaporanController::class, 'beritaAcaraDamai'])->name('berita-acara-damai');
     Route::get('/switch-permissions-print/{id}',[LaporanController::class, 'switchPermission'])->name('switch-permissions-print');
     Route::view('/security-monitor', 'security-monitor');
+	Route::get('/cso-sched/{id}',[LaporanController::class, 'csoSched'])->name('cso-sched');
 
 });

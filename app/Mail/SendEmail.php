@@ -21,6 +21,8 @@ class SendEmail extends Mailable
     {
         //
         $this->request = $request;
+        $this->name = $request['name'];
+        $this->filename = $request['filename'];
     }
 
     /**
@@ -30,6 +32,8 @@ class SendEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('email');
+		//dd($this->filename);
+        return $this->view('email')
+            ->attachFromStorageDisk('google',$this->filename,$this->name);
     }
 }

@@ -100,13 +100,13 @@ class UserApiController extends Controller
     {
         $curTime = new \DateTime($request->date);
         $curTimeTo = new \DateTime($request->dateTo);
-        $delegate = (string)$request->delegate;
+        $delegate = $request->delegate;
         $id = $request->id;
         $tukarShift = array();
-        $delegate = DB::select("SELECT * from users where users.name LIKE '%$delegate%'");
-        if (count($delegate) > 0) {
-            $delegate = $delegate[0]->id;
-        }
+        //$delegate = DB::select("SELECT * from users where users.id LIKE '%$delegate%'");
+        //if (count($delegate) > 0) {
+        //    $delegate = $delegate[0]->id;
+        //}
         if ($id) {
             DB::table('switch_permissions')
                 ->where('id', $id)
@@ -271,7 +271,7 @@ class UserApiController extends Controller
     {
         $uid = $request->uid;
         if ($uid != "") {
-            $role =  DB::table('user_roles')->where('user_id', $uid)->get();
+            $role =  DB::select("SELECT * FROM `group_chats` INNER JOIN group_chat_pivots ON group_chat_pivots.group_chat_id = group_chats.id WHERE group_chat_pivots.role_property_id = (SELECT users.role_property_id FROM users WHERE users.id = $uid)");
             return response()->json($role);
         }
         return [];
@@ -385,7 +385,7 @@ class UserApiController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:doc,docx,pdf,txt,csv,jpg|max:2048',
+            'file' => 'required|mimes:png,jpeg,mp4,txt,csv,jpg,png|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -414,22 +414,9 @@ class UserApiController extends Controller
         $get_user = array();
         $role = $request->role;
         // dump($uid);
-        $user = DB::select("SELECT DISTINCT id,user_roles.role_id,users.role_id FROM users LEFT JOIN user_roles ON user_roles.user_id = users.id
-        WHERE user_id =" . $uid);
+        $user = DB::select("SELECT * FROM `users` WHERE users.role_id = (SELECT users.role_id FROM users WHERE users.id = $uid) AND users.id != $uid");
         if ($uid != "") {
-            $user_role = DB::select("SELECT t1.id AS id, t1.name AS lev1, COUNT(t2.name) as lev2, COUNT(t3.name) as lev3, COUNT(t4.name) as lev4 FROM cityresort_prod.users AS t1 LEFT JOIN cityresort_prod.users AS t2 ON t2.supervisor = t1.id LEFT JOIN cityresort_prod.users AS t3 ON t3.supervisor = t2.id LEFT JOIN cityresort_prod.users AS t4 ON t4.supervisor = t3.id WHERE (t1.id = " . $uid . " AND t1.role_id = " . $role . ") GROUP BY t1.name,t1.id");
-            if ($user_role[0]->lev2 > 0 && $user_role[0]->lev3 > 0) {
-                // dump("dansek");
-                $get_user = DB::select("SELECT id,role_group.role_id,lev1,lev2,lev3  FROM role_group LEFT JOIN user_roles ON user_roles.user_id = role_group.id WHERE lev2 > 0 AND lev3 > 0 AND role_group.role_id = " . $role . " AND id != " . $uid . " AND user_roles.role_id != " . $user[0]->role_id . " GROUP BY id,role_group.role_id,lev1,lev2,lev3,user_id");
-            } elseif ($user_role[0]->lev2 > 0) {
-                // dump('danru');
-                $get_user = DB::select("SELECT id,role_group.role_id,lev1,lev2,lev3  FROM role_group LEFT JOIN user_roles ON user_roles.user_id = role_group.id WHERE lev2 > 0 AND lev3 = 0 AND role_group.role_id = " . $role . " AND id != " . $uid . " AND user_roles.role_id != " . $user[0]->role_id . " GROUP BY id,role_group.role_id,lev1,lev2,lev3,user_id");
-            } else {
-                // dump('anggota');
-                $get_user = DB::select("SELECT id,role_group.role_id,lev1,lev2,lev3  FROM role_group LEFT JOIN user_roles ON user_roles.user_id = role_group.id WHERE lev2 = 0 AND lev3 = 0 AND role_group.role_id = " . $role . " AND id != " . $uid . " AND user_roles.role_id != " . $user[0]->role_id . " GROUP BY id,role_group.role_id,lev1,lev2,lev3,user_id");
-            }
-            // dump($get_user);
-            return response()->json($get_user);
+            return response()->json($user);
         }
         return [];
     }
@@ -667,5 +654,41 @@ class UserApiController extends Controller
             }
         }
         return response()->json(["Success" => true, "data" => $data]);
+    }
+	
+	
+    public function getMenus(Request $request)
+    {
+        $uid = $request->uid;
+        $user_role = array();
+        $get_user = array();
+        $role = $request->role;
+        // dump($uid);
+		if($uid){
+			$data = DB::select("SELECT * FROM `permissions` INNER JOIN permission_role on permission_role.permission_id = permissions.id WHERE permission_role.role_id = (SELECT users.role_id FROM users WHERE users.id = $uid) AND permissions.key LIKE '%add%' AND permissions.table_name != 'menus' AND (permissions.table_name ='lembur_forms' OR permissions.table_name = 'good_applications' OR permissions.table_name = 'leave_forms' OR permissions.table_name = 'time_deviations' OR permissions.table_name = 'switch_permissions')");
+		}else{
+			$data = "";
+		}
+		
+        //$tukarShift = SwitchPermission::where("next_approver", $uid)->get();
+        return response()->json($data);
+    }
+	
+    public function getJadwal(Request $request)
+    {
+        $uid = $request->uid;
+		$role = $request->role;
+		$day = date('l');
+		$a=array("1"=>"Monday","2"=>"Tuesday","3"=>"Wednesday","4"=>"Thursday","5"=>"Friday","6"=>"Saturday","7"=>"Sunday");
+		$today = array_search($day,$a);
+        // dump($uid);
+		if($uid){
+			$data = DB::select("SELECT time,towers.name as tower_id, description FROM `cso_schedules` LEFT JOIN towers on towers.id = cso_schedules.tower_id WHERE cso_schedules.employee_id = $uid and cso_schedules.day = $today ORDER BY time;");
+		}else{
+			$data = array();
+		}
+		
+        //$tukarShift = SwitchPermission::where("next_approver", $uid)->get();
+        return response()->json($data);
     }
 }

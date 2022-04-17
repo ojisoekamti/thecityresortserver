@@ -1,4 +1,6 @@
-@if ($request['pemohon'])
+@if (isset($request['invoice']))
+	<div>Send Invoice Test</div>
+@elseif ($request['pemohon'])
     <div>
         Tukar Shift dengan detail di bawah ini :<br>
         Tukar Shift id : {{ $request['data']->id }}<br>

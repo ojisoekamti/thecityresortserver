@@ -92,6 +92,8 @@ Route::get("user/{email}", "UserApiController@userDetail");
 
 Route::get("send-email", [UserApiController::class, 'sendMail']);
 
+Route::get("get-menus", [UserApiController::class, 'getMenus']);
+Route::get("get-jadwal", [UserApiController::class, 'getJadwal']);
 Route::get("chat-list", [UserApiController::class, 'chatList']);
 Route::get("get-contact", [ChatApiController::class, 'getContact']);
 Route::post("insert-chat-list", [UserApiController::class, 'insertChatList']);
