@@ -291,8 +291,8 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
     {
         // dd(Auth::user());
         $user = Auth::user();
-        $roleGroup = [];
-        $roleGroup = DB::table("user_roles")->where('user_id', $user->id)->get();
+        //$roleGroup = [];
+        //$roleGroup = $user-> //DB::table("role_properties")->where('user_id', $user->id)->get();
 
         $slug = $this->getSlug($request);
 
@@ -336,11 +336,11 @@ class TicketController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
             $view = "voyager::$slug.edit-add";
         }
         // dd($roleGroup);
-        if (count($roleGroup) == 0) {
-            $roleGroup->role_id = $user->role_id;
-        }
+        //if (count($roleGroup) == 0) {
+        //    $roleGroup->role_id = $user->role_id;
+        //}
 
-        $dataTypeContent->role_group = $roleGroup;
+        $dataTypeContent->role_group = $user->role_property_id;
         return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'user'));
     }
 

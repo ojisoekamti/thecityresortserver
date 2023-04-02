@@ -2,16 +2,7 @@
 $edit = !is_null($dataTypeContent->getKey());
 $add = is_null($dataTypeContent->getKey());
 $role = $user->role_id;
-$role_id_group = $dataTypeContent->role_group;
-if ($role_id_group == null) {
-    $role_id_group = $user->role_id;
-} elseif (count($role_id_group) > 0) {
-    $role_id_group = $role_id_group[0]->role_id;
-} elseif ($role_id_group->role_id > 0) {
-    $role_id_group = $role_id_group->role_id;
-}
-// dd($role_id_group);
-// dump($user->role_id);
+$role_id_group = $user->role_property_id;  
 @endphp
 @extends('voyager::master')
 
@@ -70,10 +61,10 @@ if ($role_id_group == null) {
                                 @php
                                     // dump($row->field=='ticket_belongsto_user_relationship');
                                     
-                                    if ($row->field == 'ticket_belongsto_user_relationship' && $role_id_group != 14) {
+                                    if ($row->field == 'ticket_belongsto_user_relationship' && $role_id_group != 10) {
                                         continue;
                                     }
-                                    if ($row->field == 'ticket_belongsto_user_relationship_1' && $role_id_group != 14) {
+                                    if ($row->field == 'ticket_belongsto_user_relationship_1' && $role_id_group != 10) {
                                         continue;
                                     }
                                     
@@ -94,7 +85,7 @@ if ($role_id_group == null) {
                                     control-label" for="name">{{ $row->getTranslatedAttribute('display_name') }}</label>
 
                                     @include('voyager::multilingual.input-hidden-bread-edit-add')
-                                    @if (($row->field != 'ticket_belongsto_user_relationship'&&$row->field != 'ticket_belongsto_user_relationship_1') && $role_id_group == 14)
+                                    @if (($row->field != 'ticket_belongsto_user_relationship'&&$row->field != 'ticket_belongsto_user_relationship_1') && $role_id_group == 10)
 
                                         @if (isset($row->details->view))
                                             @include($row->details->view, ['row' => $row, 'dataType' => $dataType,
@@ -185,7 +176,7 @@ if ($role_id_group == null) {
                                         @endif
                                     @endif
                                     @if (isset($row->details->view))
-                                        @if (($row->field != 'ticket_belongsto_user_relationship'&&$row->field != 'ticket_belongsto_user_relationship_1') && $role_id_group == 14)
+                                        @if (($row->field != 'ticket_belongsto_user_relationship'&&$row->field != 'ticket_belongsto_user_relationship_1') && $role_id_group == 10)
                                             <div hidden>
                                                 @include($row->details->view, ['row' => $row, 'dataType' => $dataType,
                                                 'dataTypeContent' => $dataTypeContent, 'content' =>
@@ -203,7 +194,7 @@ if ($role_id_group == null) {
                                             => $row->details])
                                         @endif
                                     @elseif ($row->type == 'relationship')
-                                        @if (($row->field != 'ticket_belongsto_user_relationship'&&$row->field != 'ticket_belongsto_user_relationship_1') && $role_id_group == 14)
+                                        @if (($row->field != 'ticket_belongsto_user_relationship'&&$row->field != 'ticket_belongsto_user_relationship_1') && $role_id_group == 10)
                                             <div hidden>
                                                 @include('voyager::formfields.relationship', ['options' => $row->details])
                                             </div>
@@ -211,7 +202,7 @@ if ($role_id_group == null) {
                                             @include('voyager::formfields.relationship', ['options' => $row->details])
                                         @endif
                                     @else
-                                        @if (($row->field != 'ticket_belongsto_user_relationship'&&$row->field != 'ticket_belongsto_user_relationship_1') && $role_id_group == 14)
+                                        @if (($row->field != 'ticket_belongsto_user_relationship'&&$row->field != 'ticket_belongsto_user_relationship_1') && $role_id_group == 10)
                                             <div hidden>
                                                 {!! app('voyager')->formField($row, $dataType, $dataTypeContent) !!}
                                             </div>

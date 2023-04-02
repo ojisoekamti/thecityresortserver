@@ -17,6 +17,9 @@ use App\Http\Controllers\LaporanController;
 Route::get('/', function () {
     return view('index');
 });
+Route::get('/privacy-policy', function () {
+    return view('privacypolicy');
+});
 
 
 //Route::get('admin/berita-acara',[LaporanController::class, 'pdf']);
